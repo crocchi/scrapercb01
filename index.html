@@ -160,7 +160,7 @@
   <script>
  let url = 'https://cineblog01.now/film/?sorting=news_read'; // Replace with the URL you want to scrape
  let proxyUrl = 'https://cors-anywhere.herokuapp.com/';
-let proxyUrl2 = 'https://api.allorigins.win/raw?url=';
+let proxyUrl2 = 'https://proxy.cors.sh/'//'https://api.allorigins.win/raw?url=';
 let currentProxy = 1;
 
 const switchProxy = () => {
@@ -270,7 +270,7 @@ const init = (url2="https://cineblog01.now/film/?genere=6&sorting=news_read") =>
       if (!response.ok) {
         // Se la richiesta fallisce, usa il proxy
         //return fetch(proxyUrl + targetUrl);
-        alert(`fetch error! switch proxy - ${response.status}`);
+        alert(`fetch error! switch proxy - ${response.reason}`);
         proxyUrl = switchProxy();
       }
       return response;

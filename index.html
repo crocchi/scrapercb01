@@ -261,10 +261,10 @@ const init = (url2="https://cineblog01.now/film/?genere=6&sorting=news_read") =>
 
     console.log(proxyUrl + targetUrl);
 
-    fetch(proxyUrl + targetUrl,{ headers: {
+    fetch(proxyUrl + targetUrl/*,{ headers: {
           'Origin': 'https://scrapercb01.onrender.com',
           'x-requested-with': 'XMLHttpRequest'
-        }})
+        }}*/)
       .then(response => response.text())
       .then(html => {
         const parser = new DOMParser();

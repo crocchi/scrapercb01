@@ -142,8 +142,9 @@ const init = (url2="https://cineblog01.now/film/?genere=6&sorting=news_read") =>
 //https://cineblog01.now/film/?genere=9&sorting=news_read
 //https://cineblog01.now/film/page/2/?genere=9&sorting=fixed
 //https://cors-anywhere.herokuapp.com/https://cineblog01.now/film/?genere=9&sorting=time
+// https://api.allorigins.win/raw?url=https://example.org/
 
-const proxyUrl = 'https://cors-anywhere.herokuapp.com/';
+let proxyUrl = 'https://cors-anywhere.herokuapp.com/';
     const targetUrl =url2; //'https://cineblog01.now'; // Replace with the URL you want to scrape
 
     console.log(proxyUrl + targetUrl)
@@ -172,7 +173,11 @@ const proxyUrl = 'https://cors-anywhere.herokuapp.com/';
                 // console.log(html[0].src , html[1].src)
                  let temp=html[1].src;
                  linksCb.push(temp);
-                })
+                }).catch(error => {
+                    console.error(`Error fetching the URL: ${error}`);
+                    document.getElementById('error').textContent = `Error fetching the URL:${error}`;
+                    document.getElementById('error').textContent += error;
+                });
 
             //console.log(linksCb);
             const p = document.createElement('p');
@@ -192,7 +197,7 @@ const proxyUrl = 'https://cors-anywhere.herokuapp.com/';
       .catch(error => {
         console.error(`Error fetching the URL: ${error}`);
         console.error(`open the URL to active the proxy: ${targetUrl}`);
-        document.getElementById('error').textContent = `Error fetching the URL: ${error}`;
+        document.getElementById('error').textContent = `Error fetching the URL`;
       });
 
 

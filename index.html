@@ -66,6 +66,9 @@
       <option value="10">10</option>
     </select>
 </div>
+<div class="filter-values">
+  <button id="activate-proxy-btn">Activate Proxy</button>
+</div>
   <div id="results"></div>
   <iframe sandbox="allow-scripts" allowfullscreen src="https://cineblog01.now" id="rame" style="height: 400px;width: 400px;"></iframe>
 
@@ -110,7 +113,10 @@ document.getElementById('genere-select').addEventListener('change', function() {
         init(url)
         document.getElementById('results').innerHTML ="";
     });
-    
+    document.getElementById('activate-proxy-btn').addEventListener('click', () => {
+    const proxyUrl = 'https://cors-anywhere.herokuapp.com/'+url;
+    window.open(proxyUrl, '_blank');
+  });
     window.addEventListener('load', () => {
       const proxyUrl = 'https://cors-anywhere.herokuapp.com/';
       const targetUrl = 'https://cineblog01.now';

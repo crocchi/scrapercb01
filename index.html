@@ -76,8 +76,9 @@
   <input type="text" id="search-input" name="search" placeholder="Cerca Film...">
   <button id="search-select">Cerca</button>
 </div>
-<div class="filter-values">
+<div class="filter-values-btn">
   <button id="activate-proxy-btn">Activate Proxy</button>
+  <button id="download-html-btn">Download LocalPage</button>
 </div>
   <div id="results"></div>
   <iframe sandbox="allow-scripts" allowfullscreen src="https://cineblog01.now" id="rame" style="height: 400px;width: 400px;"></iframe>
@@ -107,7 +108,12 @@
       margin-bottom: 5px;
       font-weight: bold;
     }
-
+    .filter-values-btn {
+    display: flex;
+}
+.filter-values-btn button{
+    background-color: darkgoldenrod;
+}
     select, input[type="text"], button {
       width: 100%;
       padding: 5px;
@@ -167,7 +173,7 @@ const switchProxy = () => {
    if(type){
        url += `${type}/`;
    }else{ url +="film/"}
-   
+
      if (page) {
         url += `page/${page}/?`;
     }else{ url +="?"}
@@ -213,6 +219,19 @@ document.getElementById('genere-select').addEventListener('change', function() {
         document.getElementById('results').innerHTML ="";
     });
 
+  document.getElementById('download-html-btn').addEventListener('click', () => {
+      const htmlContent = document.documentElement.outerHTML;
+      const blob = new Blob([htmlContent], { type: 'text/html' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'page.html';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    });
+
  document.getElementById('sorting-select').addEventListener('change', function() {
         selectedSorting = this.value;
         let url = craftUrl()
@@ -223,24 +242,7 @@ document.getElementById('genere-select').addEventListener('change', function() {
     const proxyUrl = 'https://cors-anywhere.herokuapp.com/'+url;
     window.open(proxyUrl, '_blank');
   });
-  /*
-    window.addEventListener('load', () => {
-      const proxyUrl = 'https://cors-anywhere.herokuapp.com/';
-      const targetUrl = 'https://cineblog01.now';
-      fetch(proxyUrl + targetUrl)
-        .then(response => response.text())
-        .then(html => {
-          console.log('Proxy activated');
-        })
-        .catch(error => {
-          console.error(`Error activating the proxy: ${error}`);
-          const activationLink = document.createElement('a');
-          activationLink.href = proxyUrl;
-          activationLink.textContent = 'Click here to activate the proxy';
-          activationLink.target = '_blank';
-          document.body.appendChild(activationLink);
-        });
-    });*/
+
 const init = (url2="https://cineblog01.now/film/?genere=6&sorting=news_read") =>{
 //const url2="https://cineblog01.now/film/?genere=6&sorting=news_read"
 //a=document.querySelectorAll("#dle-content > article > div.short-main > h3 > a")

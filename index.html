@@ -11,6 +11,7 @@
 </div>
     <label for="genere-select">Genere:</label>
     <select name="genere" id="genere-select">
+      <option value="">-scegli-</option>
         <option value="1">Azione</option>
         <option value="2">Animazione</option>
         <option value="3">Avventura</option>
@@ -39,6 +40,7 @@
 <div class="filter-values">
     <label for="sorting-select">Ordina per:</label>
     <select name="sorting" id="sorting-select">
+      <option value="">-scegli-</option>
         <option value="date">Data inserimento</option>
         <option value="fixed">Titoli del momento</option>
         <option value="news_read">Più visualizzati</option>
@@ -47,6 +49,21 @@
         <option value="shortest">Film Corti</option>
         <option value="toprating">Voto IMDb più alto</option>
         <option value="soon">Film più attesi</option>
+    </select>
+</div>
+<div class="filter-values">
+    <label for="page-select">Pagina:</label>
+    <select name="page" id="page-select">
+      <option value="1">1</option>
+      <option value="2">2</option>
+      <option value="3">3</option>
+      <option value="4">4</option>
+      <option value="5">5</option>
+      <option value="6">6</option>
+      <option value="7">7</option>
+      <option value="8">8</option>
+      <option value="9">9</option>
+      <option value="10">10</option>
     </select>
 </div>
   <div id="results"></div>
@@ -73,6 +90,12 @@
     console.log(url);
     return url;
 };
+document.getElementById('page-select').addEventListener('change', function() {
+        page = this.value;
+        let url = craftUrl()
+        init(url)
+        document.getElementById('results').innerHTML ="";
+    });
 
 document.getElementById('genere-select').addEventListener('change', function() {
         selectedGenere = this.value;
@@ -94,7 +117,7 @@ const init = (url2="https://cineblog01.now/film/?genere=6&sorting=news_read") =>
 //genere fantasy
 //https://cineblog01.now/film/?genere=9&sorting=news_read
 //https://cineblog01.now/film/page/2/?genere=9&sorting=fixed
-
+//https://cors-anywhere.herokuapp.com/https://cineblog01.now/film/?genere=9&sorting=time
 
 const proxyUrl = 'https://cors-anywhere.herokuapp.com/';
     const targetUrl =url2; //'https://cineblog01.now'; // Replace with the URL you want to scrape

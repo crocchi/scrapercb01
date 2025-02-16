@@ -254,7 +254,7 @@ const init = (url2="https://cineblog01.now/film/?genere=6&sorting=news_read") =>
 //https://cineblog01.now/film/?genere=9&sorting=news_read
 //https://cineblog01.now/film/page/2/?genere=9&sorting=fixed
 //https://cors-anywhere.herokuapp.com/https://cineblog01.now/film/?genere=9&sorting=time
-// https://api.allorigins.win/raw?url=https://example.org/
+let proxyUrlBack="https://api.allorigins.win/raw?url="
 //https://proxy.cors.sh/https://google.it
 
 
@@ -266,6 +266,14 @@ const init = (url2="https://cineblog01.now/film/?genere=6&sorting=news_read") =>
           'Origin': 'https://scrapercb01.onrender.com',
           'x-requested-with': 'XMLHttpRequest'
         }}*/)
+      .then(response => {
+      if (!response.ok) {
+        // Se la richiesta fallisce, usa il proxy
+        //return fetch(proxyUrl + targetUrl);
+        alert(`fetch non buono!!!!`);
+      }
+      return response;
+    })
       .then(response => response.text())
       .then(html => {
         const parser = new DOMParser();

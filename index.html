@@ -71,7 +71,7 @@
 </div>
   <div id="results"></div>
   <iframe sandbox="allow-scripts" allowfullscreen src="https://cineblog01.now" id="rame" style="height: 400px;width: 400px;"></iframe>
-
+  <div id="error"></div>
   <script>
  let url = 'https://cineblog01.now/film/?sorting=news_read'; // Replace with the URL you want to scrape
  let selectedGenere =0;//fantasy
@@ -117,6 +117,7 @@ document.getElementById('genere-select').addEventListener('change', function() {
     const proxyUrl = 'https://cors-anywhere.herokuapp.com/'+url;
     window.open(proxyUrl, '_blank');
   });
+  /*
     window.addEventListener('load', () => {
       const proxyUrl = 'https://cors-anywhere.herokuapp.com/';
       const targetUrl = 'https://cineblog01.now';
@@ -133,7 +134,7 @@ document.getElementById('genere-select').addEventListener('change', function() {
           activationLink.target = '_blank';
           document.body.appendChild(activationLink);
         });
-    });
+    });*/
 const init = (url2="https://cineblog01.now/film/?genere=6&sorting=news_read") =>{
 //const url2="https://cineblog01.now/film/?genere=6&sorting=news_read"
 //a=document.querySelectorAll("#dle-content > article > div.short-main > h3 > a")
@@ -191,6 +192,7 @@ const proxyUrl = 'https://cors-anywhere.herokuapp.com/';
       .catch(error => {
         console.error(`Error fetching the URL: ${error}`);
         console.error(`open the URL to active the proxy: ${targetUrl}`);
+        document.getElementById('error').textContent = `Error fetching the URL: ${error}`;
       });
 
 
@@ -208,6 +210,7 @@ const suka = async (tUrl) => {
         return docEl;
     } catch (error) {
         console.error(`Error fetching the URL: ${error}`);
+        document.getElementById('error').textContent = `Error fetching the URL: ${error}`;
     }
 };
 }

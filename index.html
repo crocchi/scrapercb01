@@ -128,6 +128,7 @@
     button {
       background-color: #007bff;
       color: #fff;
+      height: 40px;
       cursor: pointer;
     }
 
@@ -314,11 +315,6 @@ const init = (url2="https://cineblog01.now/film/?genere=6&sorting=news_read") =>
         document.getElementById('error').textContent = `Error fetching the URL`;
       });
       })
-      .catch(error => {
-        console.error(`Error fetching the URL : ${error}`);
-        console.error(`open the URL to active the proxy: ${targetUrl}`);
-        document.getElementById('error').textContent = `Error fetching the URL`;
-      });
 
 
 const suka = async (tUrl) => {

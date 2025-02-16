@@ -26,7 +26,7 @@ self.addEventListener('fetch', event => {
   );
 });
 */
-
+/*
 
 self.addEventListener('fetch', event => {
     const requestURL = new URL(event.request.url);
@@ -45,7 +45,7 @@ self.addEventListener('fetch', event => {
         fetch(event.request)
       );
     }
-  });
+  }); */
 
 self.addEventListener('activate', event => {
   const cacheWhitelist = [CACHE_NAME];

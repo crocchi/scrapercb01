@@ -6,7 +6,7 @@
   <title>Web Scraper</title>
 </head>
 <body>
-  <h1>Cb01 Web Scraper by cro</h1>
+  <h1>Cb01 WebScraper/NoAds by_cro</h1>
 <div class="filter-values">
 </div>
     <label for="genere-select">Genere:</label>
@@ -65,6 +65,16 @@
       <option value="9">9</option>
       <option value="10">10</option>
     </select>
+
+    <select name="type" id="type-select">
+      <option value="film">Film</option>
+      <option value="serie-tv">Serie-Tv</option>
+     
+    </select>
+</div>
+<div class="filter-values">
+  <input type="text" id="search-input" name="search" placeholder="Cerca Film...">
+  <button id="search-select">Cerca</button>
 </div>
 <div class="filter-values">
   <button id="activate-proxy-btn">Activate Proxy</button>
@@ -73,7 +83,70 @@
   <iframe sandbox="allow-scripts" allowfullscreen src="https://cineblog01.now" id="rame" style="height: 400px;width: 400px;"></iframe>
   <div id="error"></div>
 
-  
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      margin: 2px;
+      padding: 0;
+    }
+
+    h1 {
+      text-align: center;
+      color: #333;
+    }
+
+    .filter-values {
+      background-color: #fff;
+      border-radius: 5px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: bold;
+    }
+
+    select, input[type="text"], button {
+      width: 100%;
+      padding: 5px;
+      margin-bottom: 4px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    button {
+      background-color: #007bff;
+      color: #fff;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #0056b3;
+    }
+
+    #results {
+      margin: 20px;
+      padding: 10px;
+      background-color: #fff;
+      border-radius: 5px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    #rame {
+      display: block;
+      margin: 20px auto;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    #error {
+      color: red;
+      text-align: center;
+      margin: 20px;
+    }
+  </style>
   <script>
  let url = 'https://cineblog01.now/film/?sorting=news_read'; // Replace with the URL you want to scrape
  let proxyUrl = 'https://cors-anywhere.herokuapp.com/';
@@ -87,9 +160,14 @@ const switchProxy = () => {
  let selectedGenere =0;//fantasy
  let selectedSorting =0;
  let page=0;
+ let type=0;//film - serie-tv
  
  const craftUrl = () => {
-   url = `https://cineblog01.now/film/`;
+   url = `https://cineblog01.now/`;
+   if(type){
+       url += `${type}/`;
+   }else{ url +="film/"}
+   
      if (page) {
         url += `page/${page}/?`;
     }else{ url +="?"}
@@ -112,6 +190,24 @@ document.getElementById('page-select').addEventListener('change', function() {
 
 document.getElementById('genere-select').addEventListener('change', function() {
         selectedGenere = this.value;
+        let url = craftUrl()
+        init(url)
+        document.getElementById('results').innerHTML ="";
+    });
+
+    document.getElementById('search-select').addEventListener('click', function() {
+       //----------- selectedGenere = this.value;
+       //search-input
+       let valueTemp= document.getElementById("search-input").value;
+       let url=`https://cineblog01.now/film/?story=${valueTemp}&do=search&subaction=search`
+        //let url = craftUrl()
+        init(url)
+        document.getElementById('results').innerHTML ="";
+    });
+
+    //type-select
+    document.getElementById('type-select').addEventListener('change', function() {
+        type = this.value;
         let url = craftUrl()
         init(url)
         document.getElementById('results').innerHTML ="";
@@ -158,8 +254,12 @@ const init = (url2="https://cineblog01.now/film/?genere=6&sorting=news_read") =>
 
     const targetUrl =url2; //'https://cineblog01.now'; // Replace with the URL you want to scrape
 
-    console.log(proxyUrl + targetUrl)
-    fetch(proxyUrl + targetUrl)
+    console.log(proxyUrl + targetUrl);
+
+    fetch(proxyUrl + targetUrl,{ headers: {
+          'Origin': 'https://scrapercb01.onrender.com',
+          'x-requested-with': 'XMLHttpRequest'
+        }})
       .then(response => response.text())
       .then(html => {
         const parser = new DOMParser();

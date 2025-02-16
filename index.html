@@ -1,4 +1,4 @@
-  <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -79,39 +79,12 @@
 <div class="filter-values-btn">
   <button id="activate-proxy-btn">Activate Proxy</button>
   <button id="download-html-btn">Download LocalPage</button>
+  <button id="install-app-btn">Install App</button>
 </div>
   <div id="results"></div>
   <iframe sandbox="allow-scripts" allowfullscreen src="https://cineblog01.now" id="rame" style="height: 400px;width: 400px;"></iframe>
   <div id="error"></div>
-  <div class="filter-values-btn">
-    <button id="install-app-btn">Install App</button>
-  </div>
-  <script>
-    let deferredPrompt;
-    window.addEventListener('beforeinstallprompt', (e) => {
-      e.preventDefault();
-      deferredPrompt = e;
-      document.getElementById('install-app-btn').style.display = 'block';
-    });
 
-    document.getElementById('install-app-btn').addEventListener('click', async () => {
-      if (deferredPrompt) {
-        deferredPrompt.prompt();
-        const { outcome } = await deferredPrompt.userChoice;
-        if (outcome === 'accepted') {
-          console.log('User accepted the install prompt');
-        } else {
-          console.log('User dismissed the install prompt');
-        }
-        deferredPrompt = null;
-      }
-    });
-
-    window.addEventListener('appinstalled', () => {
-      console.log('PWA was installed');
-      document.getElementById('install-app-btn').style.display = 'none';
-    });
-  </script>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -365,6 +338,31 @@ const suka = async (tUrl) => {
 };
 }
 //document.querySelector("#download-table > tbody > tr ")
+
+  let deferredPrompt;
+
+  window.addEventListener('beforeinstallprompt', (e) => {
+    e.preventDefault();
+    deferredPrompt = e;
+    document.getElementById('install-app-btn').style.display = 'block';
+  });
+
+  document.getElementById('install-app-btn').addEventListener('click', async () => {
+    if (deferredPrompt) {
+      deferredPrompt.prompt();
+      const { outcome } = await deferredPrompt.userChoice;
+      if (outcome === 'accepted') {
+        console.log('User accepted the install prompt');
+      } else {
+        console.log('User dismissed the install prompt');
+      }
+      deferredPrompt = null;
+    }
+  });
+
+  window.addEventListener('appinstalled', () => {
+    console.log('PWA was installed');
+  });
 
   </script>
 </body>

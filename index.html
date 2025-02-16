@@ -72,14 +72,24 @@
   <div id="results"></div>
   <iframe sandbox="allow-scripts" allowfullscreen src="https://cineblog01.now" id="rame" style="height: 400px;width: 400px;"></iframe>
   <div id="error"></div>
+
+  
   <script>
  let url = 'https://cineblog01.now/film/?sorting=news_read'; // Replace with the URL you want to scrape
+ let proxyUrl = 'https://cors-anywhere.herokuapp.com/';
+let proxyUrl2 = 'https://api.allorigins.win/raw?url=';
+let currentProxy = 1;
+
+const switchProxy = () => {
+  currentProxy = currentProxy === 1 ? 2 : 1;
+  return currentProxy === 1 ? proxyUrl : proxyUrl2;
+};
  let selectedGenere =0;//fantasy
  let selectedSorting =0;
  let page=0;
  
  const craftUrl = () => {
-    let url = `https://cineblog01.now/film/`;
+   url = `https://cineblog01.now/film/`;
      if (page) {
         url += `page/${page}/?`;
     }else{ url +="?"}
@@ -144,7 +154,7 @@ const init = (url2="https://cineblog01.now/film/?genere=6&sorting=news_read") =>
 //https://cors-anywhere.herokuapp.com/https://cineblog01.now/film/?genere=9&sorting=time
 // https://api.allorigins.win/raw?url=https://example.org/
 
-let proxyUrl = 'https://cors-anywhere.herokuapp.com/';
+
     const targetUrl =url2; //'https://cineblog01.now'; // Replace with the URL you want to scrape
 
     console.log(proxyUrl + targetUrl)
@@ -192,10 +202,14 @@ let proxyUrl = 'https://cors-anywhere.herokuapp.com/';
             p.appendChild(a);
             resultsDiv.appendChild(p);
             cont++
-        });
+        }).catch(error => {
+        console.error(`Error fetching the URL article: ${error}`);
+        console.error(`open the URL to active the proxy: ${targetUrl}`);
+        document.getElementById('error').textContent = `Error fetching the URL`;
+      });
       })
       .catch(error => {
-        console.error(`Error fetching the URL: ${error}`);
+        console.error(`Error fetching the URL : ${error}`);
         console.error(`open the URL to active the proxy: ${targetUrl}`);
         document.getElementById('error').textContent = `Error fetching the URL`;
       });
@@ -214,7 +228,7 @@ const suka = async (tUrl) => {
         //console.log(docEl)
         return docEl;
     } catch (error) {
-        console.error(`Error fetching the URL: ${error}`);
+        console.error(`Error fetching the suka URL: ${error}`);
         document.getElementById('error').textContent = `Error fetching the URL: ${error}`;
     }
 };

@@ -1,0 +1,172 @@
+  <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Web Scraper</title>
+</head>
+<body>
+  <h1>Cb01 Web Scraper by cro</h1>
+<div class="filter-values">
+</div>
+    <label for="genere-select">Genere:</label>
+    <select name="genere" id="genere-select">
+        <option value="1">Azione</option>
+        <option value="2">Animazione</option>
+        <option value="3">Avventura</option>
+        <option value="4">Biografico</option>
+        <option value="5">Commedia</option>
+        <option value="24">Crime</option>
+        <option value="6">Documentario</option>
+        <option value="7">Drammatico</option>
+        <option value="8">Erotico</option>
+        <option value="26">Famiglia</option>
+        <option value="9">Fantascienza</option>
+        <option value="10">Fantasy</option>
+        <option value="11">Giallo</option>
+        <option value="12">Guerra</option>
+        <option value="13">Horror</option>
+        <option value="14">Musical</option>
+        <option value="15">Poliziesco</option>
+        <option value="16">Romantico</option>
+        <option value="23">Storico</option>
+        <option value="17">Spionaggio</option>
+        <option value="18">Sportivo</option>
+        <option value="19">Thriller</option>
+        <option value="20">Western</option>
+    </select>
+</div>
+<div class="filter-values">
+    <label for="sorting-select">Ordina per:</label>
+    <select name="sorting" id="sorting-select">
+        <option value="date">Data inserimento</option>
+        <option value="fixed">Titoli del momento</option>
+        <option value="news_read">Più visualizzati</option>
+        <option value="title">Titoli A-Z</option>
+        <option value="time">Film lunghi (Durata)</option>
+        <option value="shortest">Film Corti</option>
+        <option value="toprating">Voto IMDb più alto</option>
+        <option value="soon">Film più attesi</option>
+    </select>
+</div>
+  <div id="results"></div>
+  <iframe sandbox="allow-scripts" allowfullscreen src="https://cineblog01.now" id="rame" style="height: 400px;width: 400px;"></iframe>
+
+  <script>
+ let url = 'https://cineblog01.now/film/?sorting=news_read'; // Replace with the URL you want to scrape
+ let selectedGenere =0;//fantasy
+ let selectedSorting =0;
+ let page=0;
+ 
+ const craftUrl = () => {
+    let url = `https://cineblog01.now/film/`;
+     if (page) {
+        url += `page/${page}/?`;
+    }else{ url +="?"}
+
+    if (selectedGenere) {
+        url += `genere=${selectedGenere}&`;
+    }
+    if (selectedSorting) {
+        url += `sorting=${selectedSorting}`;
+    }
+    console.log(url);
+    return url;
+};
+
+document.getElementById('genere-select').addEventListener('change', function() {
+        selectedGenere = this.value;
+        let url = craftUrl()
+        init(url)
+        document.getElementById('results').innerHTML ="";
+    });
+
+ document.getElementById('sorting-select').addEventListener('change', function() {
+        selectedSorting = this.value;
+        let url = craftUrl()
+        init(url)
+        document.getElementById('results').innerHTML ="";
+    });
+
+const init = (url2="https://cineblog01.now/film/?genere=6&sorting=news_read") =>{
+//const url2="https://cineblog01.now/film/?genere=6&sorting=news_read"
+//a=document.querySelectorAll("#dle-content > article > div.short-main > h3 > a")
+//genere fantasy
+//https://cineblog01.now/film/?genere=9&sorting=news_read
+//https://cineblog01.now/film/page/2/?genere=9&sorting=fixed
+
+
+const proxyUrl = 'https://cors-anywhere.herokuapp.com/';
+    const targetUrl =url2; //'https://cineblog01.now'; // Replace with the URL you want to scrape
+
+    console.log(proxyUrl + targetUrl)
+    fetch(proxyUrl + targetUrl)
+      .then(response => response.text())
+      .then(html => {
+        const parser = new DOMParser();
+        const doc = parser.parseFromString(html, 'text/html');
+        const articles = [];
+        let linksCb = [];
+        let cont=0;
+
+        const articleElements = doc.querySelectorAll("#dle-content > article > div.short-main > h3 > a");
+        articleElements.forEach(element => {
+          const title = element.textContent;
+          const links = element.href;
+          articles.push({ title , links});
+        });
+
+        const resultsDiv = document.getElementById('results');
+        articles.forEach(async (article) => {
+            await suka(article.links)
+             .then(html => {
+                //let tuttiLink=html.querySelectorAll("#download-table > tbody > tr ");
+                 //html = 
+                // console.log(html[0].src , html[1].src)
+                 let temp=html[1].src;
+                 linksCb.push(temp);
+                })
+
+            //console.log(linksCb);
+            const p = document.createElement('p');
+            const a = document.createElement('a');
+            a.textContent = article.title;
+            a.href = linksCb[cont];
+            let lin=linksCb[cont];
+            a.addEventListener('click', (event) => {
+                event.preventDefault();
+                document.getElementById('rame').src = lin;
+            }); a.target = '_blank';
+            p.appendChild(a);
+            resultsDiv.appendChild(p);
+            cont++
+        });
+      })
+      .catch(error => {
+        console.error(`Error fetching the URL: ${error}`);
+        console.error(`open the URL to active the proxy: ${targetUrl}`);
+      });
+
+
+const suka = async (tUrl) => {
+   // debugger;
+    try {
+        const response = await fetch(proxyUrl + tUrl);
+        const html2 = await response.text();
+        const parser = new DOMParser();
+        const doc = parser.parseFromString(html2, 'text/html');
+       // console.log(doc)
+        let docEl=doc.body.querySelectorAll("iframe");
+        //document.querySelector("#mirrorFrame") #download-table > tbody > tr
+        //console.log(docEl)
+        return docEl;
+    } catch (error) {
+        console.error(`Error fetching the URL: ${error}`);
+    }
+};
+}
+//document.querySelector("#download-table > tbody > tr ")
+
+  </script>
+</body>
+</html>

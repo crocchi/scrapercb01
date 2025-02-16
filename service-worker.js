@@ -16,6 +16,7 @@ self.addEventListener('install', event => {
   );
 });
 
+/*
 self.addEventListener('fetch', event => {
   event.respondWith(
     caches.match(event.request)
@@ -24,6 +25,27 @@ self.addEventListener('fetch', event => {
       })
   );
 });
+*/
+
+
+self.addEventListener('fetch', event => {
+    const requestURL = new URL(event.request.url);
+  
+    // Check if the request is for a local resource
+    if (requestURL.origin === location.origin) {
+      event.respondWith(
+        caches.match(event.request)
+          .then(response => {
+            return response || fetch(event.request);
+          })
+      );
+    } else {
+      // Handle external requests differently if needed
+      event.respondWith(
+        fetch(event.request)
+      );
+    }
+  });
 
 self.addEventListener('activate', event => {
   const cacheWhitelist = [CACHE_NAME];

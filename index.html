@@ -159,8 +159,8 @@
   </style>
   <script>
  let url = 'https://cineblog01.now/film/?sorting=news_read'; // Replace with the URL you want to scrape
- let proxyUrl = 'https://cors-anywhere.herokuapp.com/';
-let proxyUrl2 = 'https://solana-token-info.onrender.com/'//'https://api.allorigins.win/'//'https://corsproxy.io/';//'https://proxy.cors.sh/'//'https://api.allorigins.win/raw?url=';
+ let proxyUrl2 = 'https://cors-anywhere.herokuapp.com/';
+let proxyUrl = 'https://solana-token-info.onrender.com/'//'https://api.allorigins.win/'//'https://corsproxy.io/';//'https://proxy.cors.sh/'//'https://api.allorigins.win/raw?url=';
 let currentProxy = 1;
 
 const switchProxy = () => {
@@ -209,7 +209,7 @@ document.getElementById('genere-select').addEventListener('change', function() {
        //----------- selectedGenere = this.value;
        //search-input
        let valueTemp= document.getElementById("search-input").value;
-       let url=`https://cineblog01.now/film/?story=${valueTemp}&do=search&subaction=search`
+       let url=`https://cineblog01.now/${type}/?story=${valueTemp}&do=search&subaction=search`
         //let url = craftUrl()
         init(url)
         document.getElementById('results').innerHTML ="";
@@ -286,14 +286,22 @@ const init = (url2="https://cineblog01.now/film/?genere=6&sorting=news_read") =>
         const articleElements = doc.querySelectorAll("#dle-content > article > div.short-main > h3 > a");
         articleElements.forEach(element => {
           const title = element.textContent;
-          const links = element.href;
+          let links;
+          if(type=="serie-tv"){
+            links = element.links;
+          }else{
+            links = element.href;}
+
           articles.push({ title , links});
         });
 
         const resultsDiv = document.getElementById('results');
+        console.log(articles)
         articles.forEach(async (article) => {
+        
             await suka(article.links)
              .then(html => {
+              //console.log(html)
                 //let tuttiLink=html.querySelectorAll("#download-table > tbody > tr ");
                  //html = 
                 // console.log(html[0].src , html[1].src)
@@ -328,6 +336,53 @@ const init = (url2="https://cineblog01.now/film/?genere=6&sorting=news_read") =>
 
 const suka = async (tUrl) => {
    // debugger;
+
+   if(type=="serie-tv"){
+   try {
+        const response = await fetch(proxyUrl + tUrl);
+        const html2 = await response.text();
+        const parser = new DOMParser();
+        const doc = parser.parseFromString(html2, 'text/html');
+       // cscrape links e stagioni episodio
+       
+       const mirrors = document.querySelectorAll('.mirrors .mr');
+       const stagioniserie = document.querySelectorAll("#tt_holder > div.tt_series > div > div > ul > li > a");
+       //document.querySelectorAll("#tt_holder > div.tt_series > div > div.tab-pane.active > ul > li > a")
+       //document.querySelector("#serie-1_1")
+       const urls = [];
+       const urlSupervideo=[];
+       const urlDropload=[];
+       const fullStagione=[];
+       mirrors.forEach(mirror => {
+         const url = mirror.getAttribute('data-link');
+
+         if (url.includes('supervideo')) {
+                urlSupervideo.push(url);
+              } else if (url.includes('dropload')) {
+                urlDropload.push(url);
+              }
+
+        });
+
+        stagioniserie.forEach(mirror => {
+         const url = mirror.dataset.link;
+         const num = mirror.dataset.num;
+         const title = mirror.dataset.title;
+
+         fullStagione.push({url,num,title});
+
+        });
+        //console.log(fullStagione);
+        return {urlSupervideo,urlDropload,fullStagione};
+    } catch (error) {
+        console.error(`Error fetching the suka URL: ${error}`);
+        document.getElementById('error').textContent = `Error fetching the URL: ${error}`;
+    }
+  }
+
+
+
+
     try {
         const response = await fetch(proxyUrl + tUrl);
         const html2 = await response.text();
@@ -342,8 +397,10 @@ const suka = async (tUrl) => {
         console.error(`Error fetching the suka URL: ${error}`);
         document.getElementById('error').textContent = `Error fetching the URL: ${error}`;
     }
-};
-}
+
+};// fine SUKA
+
+} // FINE INIT
 //document.querySelector("#download-table > tbody > tr ")
 
   let deferredPrompt;

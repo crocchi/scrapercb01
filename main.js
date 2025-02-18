@@ -2,7 +2,7 @@ let url = 'https://cineblog01.now/film/?sorting=news_read'; // Replace with the 
 let proxyUrl2 = 'https://cors-anywhere.herokuapp.com/';
 let proxyUrl = 'https://solana-token-info.onrender.com/'//'https://api.allorigins.win/'//'https://corsproxy.io/';//'https://proxy.cors.sh/'//'https://api.allorigins.win/raw?url=';
 let currentProxy = 1;
-const urlHost="https://cineblog01.now";
+const urlHost="https://cineblog01.now/";
 
 const checkProxyStatus = async () => {
     document.getElementById('activate-proxy-btn').innerText = 'Checking proxy status..aspè';
@@ -200,11 +200,12 @@ const init = (url2 = "https://cineblog01.now/film/?genere=6&sorting=news_read") 
 
                     await suka(article.links)
                         .then(html => {
+                            //debugger
                             console.log(html)
 
-                            let temp = html.linkVideo;
+                            let temp = html[0].linkVideo;
                             linksCb.push(temp);
-                            filmdb.push(html);
+                            filmdb.push(html[0]);
                         }).catch(error => {
                             console.error(`Error fetching the URL: ${error}`);
                             document.getElementById('error').textContent = `Error fetching the URL:${error}`;
@@ -215,6 +216,11 @@ const init = (url2 = "https://cineblog01.now/film/?genere=6&sorting=news_read") 
                     const p = document.createElement('p');
                     const a = document.createElement('a');
                     const span = document.createElement('span');
+                    const trailerLink = document.createElement('a');
+                    trailerLink.textContent = 'Trailer';
+                    trailerLink.href = filmdb[cont].trailerVideo;
+                    trailerLink.target = '_blank';
+                    p.appendChild(trailerLink);
                     span.textContent = filmdb[cont].storyFilm;
                     p.appendChild(span);
                     a.textContent = article.title;

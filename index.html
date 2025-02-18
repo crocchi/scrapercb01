@@ -182,18 +182,9 @@ const checkProxyStatus = async () => {
       }).catch(error => {
         console.error(`Error fetching the URL: ${error}`);
         document.getElementById('activate-proxy-btn').innerText = 'aspett nu 30 second!';
+        document.getElementById('activate-proxy-btn').style.backgroundColor='yellow'
       });
-    /*
-console.log(response)
-    if (await response.ok) {
-      console.log('Proxy is active');
-      document.getElementById('activate-proxy-btn').innerText = 'Proxy OK!';
-    } else {
-      console.log('Proxy is not active');
-      alert('proxy is starting...aspett NATUPOC!');
-      
-    }*/
- document.getElementById('activate-proxy-btn').innerText = 'Proxy OK!';
+
 };
 
 checkProxyStatus();

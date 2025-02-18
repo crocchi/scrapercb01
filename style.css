@@ -93,5 +93,5 @@ iframe {
 #error {
     color: var(--error);
     text-align: center;
-    margin: 20px;
+    padding: .6rem;
 }

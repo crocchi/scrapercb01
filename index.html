@@ -167,20 +167,21 @@ let proxyUrl = 'https://solana-token-info.onrender.com/'//'https://api.allorigin
 let currentProxy = 1;
 
 const checkProxyStatus = async () => {
-  try {
+  
     document.getElementById('activate-proxy-btn').innerText = 'Checking proxy status...aspett nu 30 second!';
-    const response = await fetch('https://solana-token-info.onrender.com/');
+    await fetch('https://solana-token-info.onrender.com/')
+    .then(response => {
+      if (!response.ok) {
+        console.log('Proxy is not active');
+      alert('proxy is starting...aspett NATUPOC!');
+      location.reload();
+      } else {
+        console.log('Proxy is active');
+        document.getElementById('activate-proxy-btn').innerText = 'Proxy OK!';
+      }
+    })
 
-    if (response.ok) {
-      console.log('Proxy is active');
-      document.getElementById('activate-proxy-btn').innerText = 'Proxy OK!';
-    } else {
-      console.log('Proxy is not active');
-      alert('proxy is starting...aspett nu 30 second!')
-    }
-  } catch (error) {
-    console.log('Error checking proxy status:', error);
-  }
+ 
 };
 
 checkProxyStatus();

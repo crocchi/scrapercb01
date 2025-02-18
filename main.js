@@ -202,7 +202,7 @@ const init = (url2 = "https://cineblog01.now/film/?genere=6&sorting=news_read") 
                     await suka(article.links)
                         .then(html => {
                             //debugger
-                            console.log(html)
+                            //console.log(html)
 
                             let temp = html[0].linkVideo;
                             linksCb.push(temp);
@@ -213,11 +213,15 @@ const init = (url2 = "https://cineblog01.now/film/?genere=6&sorting=news_read") 
                             document.getElementById('error').textContent += error;
                         });
 
-                    //console.log(linksCb);
+                    //creazione elementi film
                     const p = document.createElement('p');
                     const a = document.createElement('a');
                     const span = document.createElement('span');
                     const trailerLink = document.createElement('a');
+                    const img = document.createElement('img');
+                    img.src = filmdb[cont].urlLocandina;
+                    img.className = 'locandina';
+                    p.appendChild(img);
                     trailerLink.textContent = 'Trailer';
                     trailerLink.href = filmdb[cont].trailerVideo;
                     trailerLink.target = '_blank';

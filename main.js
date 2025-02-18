@@ -2,6 +2,7 @@ let url = 'https://cineblog01.now/film/?sorting=news_read'; // Replace with the 
 let proxyUrl2 = 'https://cors-anywhere.herokuapp.com/';
 let proxyUrl = 'https://solana-token-info.onrender.com/'//'https://api.allorigins.win/'//'https://corsproxy.io/';//'https://proxy.cors.sh/'//'https://api.allorigins.win/raw?url=';
 let currentProxy = 1;
+const urlHost="https://cineblog01.now";
 
 const checkProxyStatus = async () => {
     document.getElementById('activate-proxy-btn').innerText = 'Checking proxy status..aspè';
@@ -213,6 +214,9 @@ const init = (url2 = "https://cineblog01.now/film/?genere=6&sorting=news_read") 
                     //console.log(linksCb);
                     const p = document.createElement('p');
                     const a = document.createElement('a');
+                    const span = document.createElement('span');
+                    span.textContent = filmdb[cont].storyFilm;
+                    p.appendChild(span);
                     a.textContent = article.title;
                     a.href = linksCb[cont];
                     let lin = linksCb[cont];
@@ -290,6 +294,7 @@ const init = (url2 = "https://cineblog01.now/film/?genere=6&sorting=news_read") 
             let linkVideo = doc.querySelectorAll("iframe")[1].src;
             let trailerVideo = doc.querySelector("#trailer").src;
             let urlLocandina=doc.querySelector("#dle-content > article > div.story-cover > img").src;
+            urlLocandina=replaceDomain(urlLocandina);
             let storyFilm=doc.querySelector(" div.story").textContent;
 
             infoFilm.push({ linkVideo, trailerVideo,urlLocandina, storyFilm });
@@ -348,3 +353,9 @@ const serieOpen = (e) => {
     let url = e.value;
     document.getElementById('rame').src = url;
 };
+
+const replaceDomain = (url) => {
+    const oldDomain = 'https://scrapercb01.onrender.com/';
+    const newDomain = urlHost;
+    return url.replace(oldDomain, newDomain);
+  };

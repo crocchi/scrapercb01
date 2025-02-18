@@ -175,14 +175,15 @@ const checkProxyStatus = async () => {
           // Se la richiesta fallisce, usa il proxy
           alert('proxy is starting...aspett NATUPOC!');
         }
-        return response;
+
       }).finally(() => {
         document.getElementById('activate-proxy-btn').innerText = 'Activated Proxy';
         document.getElementById('activate-proxy-btn').style.backgroundColor='green'
       }).catch(error => {
         console.error(`Error fetching the URL: ${error}`);
         document.getElementById('activate-proxy-btn').innerText = 'aspett nu 30 second!';
-        document.getElementById('activate-proxy-btn').style.backgroundColor='yellow'
+        document.getElementById('activate-proxy-btn').style.backgroundColor='yellow';
+        document.getElementById('activate-proxy-btn').style.color ='black'
       });
 
 };

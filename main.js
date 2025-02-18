@@ -295,7 +295,7 @@ const init = (url2 = "https://cineblog01.now/film/?genere=6&sorting=news_read") 
             const html2 = await response.text();
             const parser = new DOMParser();
             const doc = parser.parseFromString(html2, 'text/html');
-            debugger
+            
             // suka info dalla pagina del film
             let linkVideo = doc.querySelectorAll("iframe")[1].src;
             //let trailerVideo = doc.querySelector("#trailer").src;

@@ -167,7 +167,7 @@ let proxyUrl = 'https://solana-token-info.onrender.com/'//'https://api.allorigin
 let currentProxy = 1;
 
 const checkProxyStatus = async () => {
-    document.getElementById('activate-proxy-btn').innerText = 'Checking proxy status..';
+    document.getElementById('activate-proxy-btn').innerText = 'Checking proxy status..aspè';
     document.getElementById('activate-proxy-btn').style.backgroundColor='red'
     fetch('https://solana-token-info.onrender.com/https://cineblog01.now')
       .then(response => {
@@ -181,7 +181,7 @@ const checkProxyStatus = async () => {
         document.getElementById('activate-proxy-btn').style.backgroundColor='green'
       }).catch(error => {
         console.error(`Error fetching the URL: ${error}`);
-        document.getElementById('activate-proxy-btn').innerText = 'aspett nu 30-60 second!';
+        document.getElementById('activate-proxy-btn').innerText = 'aspett nu minut!';
         document.getElementById('activate-proxy-btn').style.backgroundColor='yellow';
         document.getElementById('activate-proxy-btn').style.color ='black'
       });
@@ -314,6 +314,7 @@ const init = (url2="https://cineblog01.now/film/?genere=6&sorting=news_read") =>
         let cont=0;
         let htmlCode='';
 
+        //qui prende i link degli articoli dalle locandine dalla pagina
         const articleElements = doc.querySelectorAll("#dle-content > article > div.short-main > h3 > a");
         
        
@@ -333,21 +334,12 @@ const init = (url2="https://cineblog01.now/film/?genere=6&sorting=news_read") =>
        // console.log('serie tv')
        // console.log(article)
 
+       //qui prende il link del film e scrapa la pagina con i link del film
         await sukaSerie(article.links)
         .then(html => {
           console.log(html)
-          if(html.length==0){ return}
-          /*
-          const pp = document.createElement('p');
-             pp.textContent = article.title;
-             resultsDiv.appendChild(pp);*/
+          if(html.length==0){ return}//se sn film nn farli visualizzare(se ha solo 2 link)
 
-           /*  <label for="genere-select">Genere:</label>
-    <select name="genere" id="genere-select">
-      <option value="">-scegli-</option>
-        <option value="1">Azione</option>
-
-    </select>*/
     htmlCode+=` <label for="ser-select">${article.title}</label>`;
     htmlCode+=` <select onchange='serieOpen(this)'name="genere" id="ser-select">`;
     htmlCode+=` <option value="none">- Stagione 1 -</option>`;
@@ -355,21 +347,9 @@ const init = (url2="https://cineblog01.now/film/?genere=6&sorting=news_read") =>
           html.forEach((element) => {
             
             const {url,num,title} = element;
-            //const p = document.createElement('p');
-            //const a = document.createElement('a');
-           // htmlCode+=` <p> <a href="${url}">${title}</a> </p>`;
+            
            htmlCode+=` <option value="${url}">${title}</option>`;
-            //a.textContent = title;
-            //a.href = url;
-           // a.textContent = title;
-            //a.href = url;
-           /* a.addEventListener('click', (event) => {
-                event.preventDefault();
-                document.getElementById('rame').src = url;
-            });*/
-            //a.target = '_blank';
-            //p.appendChild(a);
-            //resultsDiv.appendChild(p);
+      
           });
           htmlCode+=` </select>`;
           resultsDiv.innerHTML += htmlCode;

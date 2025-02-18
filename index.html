@@ -4,91 +4,107 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Web Scraper</title>
+  <title>Web Scraper 0.2</title>
   <link rel="manifest" href="manifest.json">
   <link rel="icon" href="icon-192x192.png">
   <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
-  <h1>Cb01 WebScraper/NoAds by_cro</h1>
-  <div class="filter-values">
-    <label for="genere-select">Genere:</label>
-    <select name="genere" id="genere-select">
-      <option value="">-scegli-</option>
-      <option value="1">Azione</option>
-      <option value="2">Animazione</option>
-      <option value="3">Avventura</option>
-      <option value="4">Biografico</option>
-      <option value="5">Commedia</option>
-      <option value="24">Crime</option>
-      <option value="6">Documentario</option>
-      <option value="7">Drammatico</option>
-      <option value="8">Erotico</option>
-      <option value="26">Famiglia</option>
-      <option value="9">Fantascienza</option>
-      <option value="10">Fantasy</option>
-      <option value="11">Giallo</option>
-      <option value="12">Guerra</option>
-      <option value="13">Horror</option>
-      <option value="14">Musical</option>
-      <option value="15">Poliziesco</option>
-      <option value="16">Romantico</option>
-      <option value="23">Storico</option>
-      <option value="17">Spionaggio</option>
-      <option value="18">Sportivo</option>
-      <option value="19">Thriller</option>
-      <option value="20">Western</option>
-    </select>
-  </div>
-  <div class="filter-values">
-    <label for="sorting-select">Ordina per:</label>
-    <select name="sorting" id="sorting-select">
-      <option value="">-scegli-</option>
-      <option value="date">Data inserimento</option>
-      <option value="fixed">Titoli del momento</option>
-      <option value="news_read">Più visualizzati</option>
-      <option value="title">Titoli A-Z</option>
-      <option value="time">Film lunghi (Durata)</option>
-      <option value="shortest">Film Corti</option>
-      <option value="toprating">Voto IMDb più alto</option>
-      <option value="soon">Film più attesi</option>
-    </select>
-  </div>
-  <div class="filter-values">
-    <label for="page-select">Pagina:</label>
-    <select name="page" id="page-select">
-      <option value="1">1</option>
-      <option value="2">2</option>
-      <option value="3">3</option>
-      <option value="4">4</option>
-      <option value="5">5</option>
-      <option value="6">6</option>
-      <option value="7">7</option>
-      <option value="8">8</option>
-      <option value="9">9</option>
-      <option value="10">10</option>
-    </select>
+  <header>
+    <h1>Cb01 WebScraper/NoAds by_cro v0.2</h1>
+  </header>
+  <nav>
+    <div class="btn-group">
+      <button class="btn" id="activate-proxy-btn">Activate Proxy</button>
+      <button class="btn bg-secondary" id="download-html-btn">Download LocalPage</button>
+      <button class="btn bg-secondary" id="install-app-btn">Install App</button>
+    </div>
+    <div>
+      <label for="genere-select">Genere:</label>
+      <select name="genere" id="genere-select">
+        <option value="">-scegli-</option>
+        <option value="1">Azione</option>
+        <option value="2">Animazione</option>
+        <option value="3">Avventura</option>
+        <option value="4">Biografico</option>
+        <option value="5">Commedia</option>
+        <option value="24">Crime</option>
+        <option value="6">Documentario</option>
+        <option value="7">Drammatico</option>
+        <option value="8">Erotico</option>
+        <option value="26">Famiglia</option>
+        <option value="9">Fantascienza</option>
+        <option value="10">Fantasy</option>
+        <option value="11">Giallo</option>
+        <option value="12">Guerra</option>
+        <option value="13">Horror</option>
+        <option value="14">Musical</option>
+        <option value="15">Poliziesco</option>
+        <option value="16">Romantico</option>
+        <option value="23">Storico</option>
+        <option value="17">Spionaggio</option>
+        <option value="18">Sportivo</option>
+        <option value="19">Thriller</option>
+        <option value="20">Western</option>
+      </select>
+    </div>
+    <div>
+      <label for="sorting-select">Ordina per:</label>
+      <select name="sorting" id="sorting-select">
+        <option value="">-scegli-</option>
+        <option value="date">Data inserimento</option>
+        <option value="fixed">Titoli del momento</option>
+        <option value="news_read">Più visualizzati</option>
+        <option value="title">Titoli A-Z</option>
+        <option value="time">Film lunghi (Durata)</option>
+        <option value="shortest">Film Corti</option>
+        <option value="toprating">Voto IMDb più alto</option>
+        <option value="soon">Film più attesi</option>
+      </select>
+    </div>
+    <div>
+      <label for="page-select">Pagina:</label>
+      <select name="page" id="page-select">
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+        <option value="5">5</option>
+        <option value="6">6</option>
+        <option value="7">7</option>
+        <option value="8">8</option>
+        <option value="9">9</option>
+        <option value="10">10</option>
+      </select>
 
-    <select name="type" id="type-select">
-      <option value="film">Film</option>
-      <option value="serie-tv">Serie-Tv</option>
+      <select name="type" id="type-select">
+        <option value="film">Film</option>
+        <option value="serie-tv">Serie-Tv</option>
+      </select>
 
-    </select>
-  </div>
-  <div class="filter-values">
-    <input type="text" id="search-input" name="search" placeholder="Cerca Film...">
-    <button id="search-select">Cerca</button>
-  </div>
-  <div class="filter-values-btn">
-    <button id="activate-proxy-btn">Activate Proxy</button>
-    <button id="download-html-btn">Download LocalPage</button>
-    <button id="install-app-btn">Install App</button>
-  </div>
-  <div id="results"></div>
-  <iframe sandbox="allow-scripts" allowfullscreen src="https://cineblog01.now" id="rame"
-    style="height: 70vh;width: 80vw;"></iframe>
-  <div id="error"></div>
+    </div>
+    <div class="search-box">
+      <input class="" type="text" id="search-input" name="search" placeholder="Cerca Film...">
+      <button class="btn bg-primary" id="search-select">Cerca</button>
+    </div>
+
+  </nav>
+  <main>
+    <div class="main-head">
+      <h3>Results</h3>
+      <div id="error"></div>
+    </div>
+    <div id="results"></div>
+    <hr>
+    <iframe
+      sandbox="allow-scripts"
+      allowfullscreen src="https://cineblog01.now"
+      id="rame"
+      style="height: 70vh;width: 80vw;">
+    </iframe>
+  </main>
+
 
 
   <script src="main.js"></script>

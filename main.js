@@ -183,6 +183,7 @@ const init = (url2 = "https://cineblog01.now/film/?genere=6&sorting=news_read") 
                             htmlCode += ` <label for="ser-select">${article.title}</label>`;
                             htmlCode += ` <select onchange='serieOpen(this)'name="genere" id="ser-select">`;
                             htmlCode += ` <option value="none">- Stagione 1 -</option>`;
+                            htmlCode += ` </p>`
                             // htmlCode+=` <div class="serietv">`;
                             html.forEach((element) => {
 
@@ -223,6 +224,7 @@ const init = (url2 = "https://cineblog01.now/film/?genere=6&sorting=news_read") 
                     p.appendChild(trailerLink);
                     span.textContent = filmdb[cont].storyFilm;
                     p.appendChild(span);
+                    p.className = "card"
                     a.textContent = article.title;
                     a.href = linksCb[cont];
                     let lin = linksCb[cont];

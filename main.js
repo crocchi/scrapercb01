@@ -149,10 +149,11 @@ const init = (url2 = "https://cineblog01.now/film/?genere=6&sorting=news_read") 
             const doc = parser.parseFromString(html, 'text/html');
             const articles = [];
             let linksCb = [];
+            let filmdb=[];
             let cont = 0;
             let htmlCode = '';
 
-            //qui prende i link degli articoli dalle locandine dalla pagina
+            //qui prende i link e il nome del film degli articoli dalle locandine dalla pagina
             const articleElements = doc.querySelectorAll("#dle-content > article > div.short-main > h3 > a");
 
 
@@ -198,12 +199,11 @@ const init = (url2 = "https://cineblog01.now/film/?genere=6&sorting=news_read") 
 
                     await suka(article.links)
                         .then(html => {
-                            //console.log(html)
-                            //let tuttiLink=html.querySelectorAll("#download-table > tbody > tr ");
-                            //html = 
-                            // console.log(html[0].src , html[1].src)
-                            let temp = html[1].src;
+                            console.log(html)
+
+                            let temp = html.linkVideo;
                             linksCb.push(temp);
+                            filmdb.push(html);
                         }).catch(error => {
                             console.error(`Error fetching the URL: ${error}`);
                             document.getElementById('error').textContent = `Error fetching the URL:${error}`;
@@ -279,17 +279,25 @@ const init = (url2 = "https://cineblog01.now/film/?genere=6&sorting=news_read") 
 
     const suka = async (tUrl) => {
         // debugger;
-
+        let infoFilm=[];
         try {
             const response = await fetch(proxyUrl + tUrl);
             const html2 = await response.text();
             const parser = new DOMParser();
             const doc = parser.parseFromString(html2, 'text/html');
-            // console.log(doc)
-            let docEl = doc.body.querySelectorAll("iframe");
+            debugger
+            // suka info dalla pagina del film
+            let linkVideo = doc.querySelectorAll("iframe").src;
+            let trailerVideo = doc.querySelector("#trailer").src;
+            let urlLocandina=doc.querySelector("#dle-content > article > div.story-cover > img").src;
+            let storyFilm=doc.querySelector(" div.story").textContent;
+
+            infoFilm.push({ linkVideo, trailerVideo,urlLocandina, storyFilm });
             //document.querySelector("#mirrorFrame") #download-table > tbody > tr
             //console.log(docEl)
-            return docEl;
+            return infoFilm;
+            //return (docEl ,trailerVideo,urlLocandina,storyFilm);
+            
         } catch (error) {
             console.error(`Error fetching the suka URL: ${error}`);
             document.getElementById('error').textContent = `Error fetching the URL: ${error}`;

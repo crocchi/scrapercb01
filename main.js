@@ -179,7 +179,7 @@ const init = (url2 = "https://cineblog01.now/film/?genere=6&sorting=news_read") 
                         .then(html => {
                             console.log(html)
                             if (html.length == 0) { return }//se sn film nn farli visualizzare(se ha solo 2 link)
-
+                            htmlCode += ` <p class="series-card">`
                             htmlCode += ` <label for="ser-select">${article.title}</label>`;
                             htmlCode += ` <select onchange='serieOpen(this)'name="genere" id="ser-select">`;
                             htmlCode += ` <option value="none">- Stagione 1 -</option>`;

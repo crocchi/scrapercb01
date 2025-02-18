@@ -57,17 +57,22 @@ nav {
 
 nav > div {
     padding-inline: 1rem;
-    padding-block: .8rem;
+    padding-block: .6rem;
 }
 
+nav > div > div:last-of-type {
+    padding-block: .8rem;
+}
 nav .search-box {
     display: flex;
+    height: 5rem;
 }
 nav .search-box > button {
     width: 50%;
     border-top-left-radius: 0px;
     border-end-start-radius: 0px;
     margin-inline-start: 0;
+    height: auto;
 }
 nav .search-box > input {
     margin-inline-end: 0;

@@ -2,7 +2,9 @@ const CACHE_NAME = 'cb01-webscraper-cache-v1';
 const urlsToCache = [
   '/',
   '/index.html',
+  '/main.js',
   '/manifest.json',
+  '/style.css',
   '/icon-192x192.png'
   // Add other assets you want to cache
 ];

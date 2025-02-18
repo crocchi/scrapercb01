@@ -2,6 +2,7 @@ let url = 'https://cineblog01.now/film/?sorting=news_read'; // Replace with the 
 let proxyUrl2 = 'https://cors-anywhere.herokuapp.com/';
 let proxyUrl = 'https://solana-token-info.onrender.com/'//'https://api.allorigins.win/'//'https://corsproxy.io/';//'https://proxy.cors.sh/'//'https://api.allorigins.win/raw?url=';
 let currentProxy = 1;
+const urlHost="https://cineblog01.now/";
 
 const checkProxyStatus = async () => {
     document.getElementById('activate-proxy-btn').innerText = 'Checking proxy status..aspè';
@@ -149,10 +150,11 @@ const init = (url2 = "https://cineblog01.now/film/?genere=6&sorting=news_read") 
             const doc = parser.parseFromString(html, 'text/html');
             const articles = [];
             let linksCb = [];
+            let filmdb=[];
             let cont = 0;
             let htmlCode = '';
 
-            //qui prende i link degli articoli dalle locandine dalla pagina
+            //qui prende i link e il nome del film degli articoli dalle locandine dalla pagina
             const articleElements = doc.querySelectorAll("#dle-content > article > div.short-main > h3 > a");
 
 
@@ -199,12 +201,12 @@ const init = (url2 = "https://cineblog01.now/film/?genere=6&sorting=news_read") 
 
                     await suka(article.links)
                         .then(html => {
-                            //console.log(html)
-                            //let tuttiLink=html.querySelectorAll("#download-table > tbody > tr ");
-                            //html = 
-                            // console.log(html[0].src , html[1].src)
-                            let temp = html[1].src;
+                            //debugger
+                            console.log(html)
+
+                            let temp = html[0].linkVideo;
                             linksCb.push(temp);
+                            filmdb.push(html[0]);
                         }).catch(error => {
                             console.error(`Error fetching the URL: ${error}`);
                             document.getElementById('error').textContent = `Error fetching the URL:${error}`;
@@ -214,6 +216,14 @@ const init = (url2 = "https://cineblog01.now/film/?genere=6&sorting=news_read") 
                     //console.log(linksCb);
                     const p = document.createElement('p');
                     const a = document.createElement('a');
+                    const span = document.createElement('span');
+                    const trailerLink = document.createElement('a');
+                    trailerLink.textContent = 'Trailer';
+                    trailerLink.href = filmdb[cont].trailerVideo;
+                    trailerLink.target = '_blank';
+                    p.appendChild(trailerLink);
+                    span.textContent = filmdb[cont].storyFilm;
+                    p.appendChild(span);
                     p.className = "card"
                     a.textContent = article.title;
                     a.href = linksCb[cont];
@@ -281,17 +291,27 @@ const init = (url2 = "https://cineblog01.now/film/?genere=6&sorting=news_read") 
 
     const suka = async (tUrl) => {
         // debugger;
-
+        let infoFilm=[];
         try {
             const response = await fetch(proxyUrl + tUrl);
             const html2 = await response.text();
             const parser = new DOMParser();
             const doc = parser.parseFromString(html2, 'text/html');
-            // console.log(doc)
-            let docEl = doc.body.querySelectorAll("iframe");
+            debugger
+            // suka info dalla pagina del film
+            let linkVideo = doc.querySelectorAll("iframe")[1].src;
+            //let trailerVideo = doc.querySelector("#trailer").src;
+            let trailerVideo =doc.querySelectorAll("#trailer")[0].src
+            let urlLocandina=doc.querySelector("#dle-content > article > div.story-cover > img").src;
+            urlLocandina=replaceDomain(urlLocandina);
+            let storyFilm=doc.querySelector(" div.story").textContent;
+
+            infoFilm.push({ linkVideo, trailerVideo,urlLocandina, storyFilm });
             //document.querySelector("#mirrorFrame") #download-table > tbody > tr
             //console.log(docEl)
-            return docEl;
+            return infoFilm;
+            //return (docEl ,trailerVideo,urlLocandina,storyFilm);
+            
         } catch (error) {
             console.error(`Error fetching the suka URL: ${error}`);
             document.getElementById('error').textContent = `Error fetching the URL: ${error}`;
@@ -342,3 +362,9 @@ const serieOpen = (e) => {
     let url = e.value;
     document.getElementById('rame').src = url;
 };
+
+const replaceDomain = (url) => {
+    const oldDomain = 'https://scrapercb01.onrender.com/';
+    const newDomain = urlHost;
+    return url.replace(oldDomain, newDomain);
+  };

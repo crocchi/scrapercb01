@@ -298,7 +298,8 @@ const init = (url2 = "https://cineblog01.now/film/?genere=6&sorting=news_read") 
             debugger
             // suka info dalla pagina del film
             let linkVideo = doc.querySelectorAll("iframe")[1].src;
-            let trailerVideo = doc.querySelector("#trailer").src;
+            //let trailerVideo = doc.querySelector("#trailer").src;
+            let trailerVideo =doc.querySelectorAll("#trailer")[0].src
             let urlLocandina=doc.querySelector("#dle-content > article > div.story-cover > img").src;
             urlLocandina=replaceDomain(urlLocandina);
             let storyFilm=doc.querySelector(" div.story").textContent;

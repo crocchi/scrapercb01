@@ -235,6 +235,7 @@ const init = (url2 = "https://cineblog01.now/film/?genere=6&sorting=news_read") 
                     a.addEventListener('click', (event) => {
                         event.preventDefault();
                         document.getElementById('rame').src = lin;
+                        window.scrollTo(0, document.body.scrollHeight);
                     }); a.target = '_blank';
                     p.appendChild(a);
                     resultsDiv.appendChild(p);
@@ -364,6 +365,7 @@ if ('serviceWorker' in navigator) {
 
 const serieOpen = (e) => {
     let url = e.value;
+    //window.scrollTo(0, document.body.scrollHeight);
     document.getElementById('rame').src = url;
 };
 

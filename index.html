@@ -169,7 +169,7 @@ let currentProxy = 1;
 const checkProxyStatus = async () => {
   
     document.getElementById('activate-proxy-btn').innerText = 'Checking proxy status...aspett nu 30 second!';
-    await fetch('https://solana-token-info.onrender.com/')
+    await fetch('https://solana-token-info.onrender.com/https://cineblog01.now')
     .then(response => {
       if (!response.ok) {
         console.log('Proxy is not active');

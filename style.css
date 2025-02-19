@@ -147,7 +147,7 @@ iframe {
 }
 
 .card {
-    display: flex;
+    display: grid;
     flex-direction: column;
     justify-content: space-between;
     background-color: var(--white);
@@ -169,7 +169,7 @@ iframe {
     object-fit: cover;
 }
 
-.card div {
+.card span {
     padding: 1rem;
 }
 

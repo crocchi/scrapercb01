@@ -2,7 +2,7 @@ let url = 'https://cineblog01.now/film/?sorting=news_read'; // Replace with the 
 let proxyUrl2 = 'https://cors-anywhere.herokuapp.com/';
 let proxyUrl = 'https://solana-token-info.onrender.com/'//'https://api.allorigins.win/'//'https://corsproxy.io/';//'https://proxy.cors.sh/'//'https://api.allorigins.win/raw?url=';
 let currentProxy = 1;
-const urlHost="https://cineblog01.now/";
+const urlHost = "https://cineblog01.now/";
 
 const checkProxyStatus = async () => {
     document.getElementById('activate-proxy-btn').innerText = 'Checking proxy status..aspè';
@@ -18,7 +18,7 @@ const checkProxyStatus = async () => {
             document.getElementById('activate-proxy-btn').innerText = 'Activated Proxy';
             document.getElementById('activate-proxy-btn').style.backgroundColor = 'green'
         }).catch(error => {
-            console.error(`Error fetching the URL: ${error}`);
+            renderErrorMessage(error)
             document.getElementById('activate-proxy-btn').innerText = 'aspett nu minut!';
             document.getElementById('activate-proxy-btn').style.backgroundColor = 'yellow';
             document.getElementById('activate-proxy-btn').style.color = 'black'
@@ -52,7 +52,7 @@ const craftUrl = () => {
     if (selectedSorting) {
         url += `sorting=${selectedSorting}`;
     }
-    console.log(url);
+    console.log("craftUrl ->", url);
     return url;
 };
 document.getElementById('page-select').addEventListener('change', function () {
@@ -150,7 +150,7 @@ const init = (url2 = "https://cineblog01.now/film/?genere=6&sorting=news_read") 
             const doc = parser.parseFromString(html, 'text/html');
             const articles = [];
             let linksCb = [];
-            let filmdb=[];
+            let filmdb = [];
             let cont = 0;
             let htmlCode = '';
 
@@ -160,7 +160,7 @@ const init = (url2 = "https://cineblog01.now/film/?genere=6&sorting=news_read") 
 
             articleElements.forEach(element => {
                 const title = element.textContent;
-                let links = element.href;
+                const links = element.href;
 
                 articles.push({ title, links });
             });
@@ -195,7 +195,9 @@ const init = (url2 = "https://cineblog01.now/film/?genere=6&sorting=news_read") 
                             htmlCode += ` </select>`;
                             resultsDiv.innerHTML += htmlCode;
                             htmlCode = '';
-                        })
+                        }).catch(error => {
+                            renderErrorMessage(`Error SukaSerie! Fetch | ${error}`);
+                        });
 
                 } else {
 
@@ -208,9 +210,7 @@ const init = (url2 = "https://cineblog01.now/film/?genere=6&sorting=news_read") 
                             linksCb.push(temp);
                             filmdb.push(html[0]);
                         }).catch(error => {
-                            console.error(`Error fetching the URL: ${error}`);
-                            document.getElementById('error').textContent = `Error fetching the URL:${error}`;
-                            document.getElementById('error').textContent += error;
+                            renderErrorMessage(`Error SukaFilm Fetch | ${error}`);
                         });
 
                     //creazione elementi film
@@ -288,44 +288,49 @@ const init = (url2 = "https://cineblog01.now/film/?genere=6&sorting=news_read") 
             console.log(fullStagione);
             return fullStagione;
         } catch (error) {
-            console.error(`Error fetching the suka URL: ${error}`);
-            document.getElementById('error').textContent = `Error fetching the URL: ${error}`;
-
+            renderErrorMessage(`Error fetching the URL | ${error} | \n${tUrl}`);
         }
     }// fine sukaserie
 
     const suka = async (tUrl) => {
         // debugger;
-        let infoFilm=[];
+        let infoFilm = [];
         try {
             const response = await fetch(proxyUrl + tUrl);
-            const html2 = await response.text();
+            const htmlContent = await response.text();
             const parser = new DOMParser();
-            const doc = parser.parseFromString(html2, 'text/html');
-            
+            const doc = parser.parseFromString(htmlContent, 'text/html');
+
             // suka info dalla pagina del film
             let linkVideo = doc.querySelectorAll("iframe")[1].src;
             //let trailerVideo = doc.querySelector("#trailer").src;
-            let trailerVideo =doc.querySelectorAll("#trailer")[0].src
-            let urlLocandina=doc.querySelector("#dle-content > article > div.story-cover > img").src;
-            urlLocandina=replaceDomain(urlLocandina);
-            let storyFilm=doc.querySelector(" div.story").textContent;
+            let trailerVideo = doc.querySelectorAll("#trailer")[0].src
+            let urlLocandina = doc.querySelector("#dle-content > article > div.story-cover > img").src;
+            urlLocandina = replaceDomain(urlLocandina);
+            let storyFilm = doc.querySelector(" div.story").textContent;
 
-            infoFilm.push({ linkVideo, trailerVideo,urlLocandina, storyFilm });
+            infoFilm.push({ linkVideo, trailerVideo, urlLocandina, storyFilm });
+
             //document.querySelector("#mirrorFrame") #download-table > tbody > tr
             //console.log(docEl)
             return infoFilm;
             //return (docEl ,trailerVideo,urlLocandina,storyFilm);
-            
+
         } catch (error) {
-            console.error(`Error fetching the suka URL: ${error}`);
-            document.getElementById('error').textContent = `Error fetching the URL: ${error}`;
+            renderErrorMessage(`Error fetching the URL | ${error} | \n${tUrl}`);
         }
 
     };// fine SUKA
 
 } // FINE INIT
 //document.querySelector("#download-table > tbody > tr ")
+
+const renderErrorMessage = (errorMessage) => {
+    const errorEl = document.getElementById('error')
+    errorEl.textContent = "";
+    console.error(errorMessage);
+    errorEl.textContent = errorMessage;
+}
 
 let deferredPrompt;
 
@@ -370,7 +375,10 @@ const serieOpen = (e) => {
 };
 
 const replaceDomain = (url) => {
-    const oldDomain = 'https://scrapercb01.onrender.com/';
-    const newDomain = urlHost;
-    return url.replace(oldDomain, newDomain);
-  };
+    let oldDomain = "https://scrapercb01.onrender.com/";
+    if (url[0] == "f") {
+        // local file
+        oldDomain = "file:///";
+    }
+    return url.replace(oldDomain, urlHost);
+};

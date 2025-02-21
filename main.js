@@ -6,22 +6,23 @@ const urlHost = "https://cineblog01.now/";
 
 const checkProxyStatus = async () => {
     document.getElementById('activate-proxy-btn').innerText = 'Checking proxy status..aspè';
-    document.getElementById('activate-proxy-btn').style.backgroundColor = 'red'
-    fetch('https://solana-token-info.onrender.com/https://cineblog01.now')
+    document.getElementById('activate-proxy-btn').style.backgroundColor = 'red';
+    let casualNumber=Math.floor(Math.random() * 1000) + 1000;//a random number for no-cache problem
+    fetch('https://solana-token-info.onrender.com/https://cineblog01.now/?'+casualNumber)
         .then(response => {
             if (!response.ok) {
                 // Se la richiesta fallisce, usa il proxy
-                alert('proxy is starting...aspett NATUPOC!');
+                alert('errore richiesta...!');
             }
 
         }).finally(() => {
             document.getElementById('activate-proxy-btn').innerText = 'Activated Proxy';
-            document.getElementById('activate-proxy-btn').style.backgroundColor = 'green'
+            document.getElementById('activate-proxy-btn').style.backgroundColor = 'green';
         }).catch(error => {
-            renderErrorMessage(error)
+            renderErrorMessage(error);
             document.getElementById('activate-proxy-btn').innerText = 'aspett nu minut!';
             document.getElementById('activate-proxy-btn').style.backgroundColor = 'yellow';
-            document.getElementById('activate-proxy-btn').style.color = 'black'
+            document.getElementById('activate-proxy-btn').style.color = 'black';
         });
 
 };

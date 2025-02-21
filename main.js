@@ -184,6 +184,7 @@ const init = (url2 = "https://cineblog01.now/film/?genere=6&sorting=news_read") 
                             htmlCode += ` <p class="series-card">`;
                             htmlCode += ` <label for="ser-select">${article.title}</label>`;
                             htmlCode += ` <img class="series-card-img" src="${html[0].locandinaUrl}" alt="locandina">`;
+                            htmlCode += ` <span>${html[0].storyFilm}</span>`;
                             htmlCode += ` <select onchange='serieOpen(this)'name="genere" id="ser-select">`;
                             htmlCode += ` <option value="none">- Stagione 1 -</option>`;
                             htmlCode += ` </p>`
@@ -265,6 +266,7 @@ const init = (url2 = "https://cineblog01.now/film/?genere=6&sorting=news_read") 
             const stagioniserie = doc.querySelectorAll("#tt_holder > div.tt_series > div > div > ul > li > a");
             let locandinaUrl=doc.querySelector("#dle-content > article > div.story-cover > img").src;
             locandinaUrl = replaceDomain(locandinaUrl);
+            let storyFilm = doc.querySelector(" div.story").textContent;
             //document.querySelectorAll("#tt_holder > div.tt_series > div > div.tab-pane.active > ul > li > a")
             //document.querySelector("#serie-1_1")
             const urls = [];
@@ -287,7 +289,7 @@ const init = (url2 = "https://cineblog01.now/film/?genere=6&sorting=news_read") 
                 const num = mirror.dataset.num;
                 const title = mirror.dataset.title;
 
-                fullStagione.push({ url, num, title,locandinaUrl });
+                fullStagione.push({ url, num, title,locandinaUrl,storyFilm });
 
             });
             console.log(fullStagione);

@@ -83,6 +83,7 @@ document.getElementById('search-select').addEventListener('click', function () {
 //type-select
 document.getElementById('type-select').addEventListener('change', function () {
     type = this.value;
+    selectedGenere=0;// no genre selection for serie tv
     if (type == "serie-tv") {
 
         document.getElementById('genere-select').disabled = true;

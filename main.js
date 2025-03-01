@@ -208,7 +208,7 @@ const init = (url2 = "https://cineblog01.now/film/?genere=6&sorting=news_read") 
                     await suka(article.links)
                         .then(html => {
                             //debugger
-                            //console.log(html)
+                      console.log(html)
 
                             let temp = html[0].linkVideo;
                             linksCb.push(temp);
@@ -227,12 +227,21 @@ const init = (url2 = "https://cineblog01.now/film/?genere=6&sorting=news_read") 
                     img.className = 'locandina';
                     p.appendChild(img);
                     trailerLink.textContent = 'Trailer';
-                    trailerLink.href = filmdb[cont].trailerVideo;
-                    trailerLink.target = '_blank';
+                    let imdbstring=linksCb[cont];
+                    imdbstring=imdbstring.replace('https://mostraguarda.stream/movie/',"");
+                   // console.log(imdbstring);
+                  //  trailerLink.href = filmdb[cont].trailerVideo;
+                //  trailerLink.onclick='showPage(imdbstring)';
+                 trailerLink.addEventListener('click', (event) => {
+                        event.preventDefault();
+                        showPage(imdbstring);
+                    });
+                  //  trailerLink.target = '_blank';
                     p.appendChild(trailerLink);
                     span.textContent = filmdb[cont].storyFilm;
                     p.appendChild(span);
-                    p.className = "card"
+                    p.className = "card";
+                    p.id=imdbstring;
                     a.textContent = article.title;
                     a.href = linksCb[cont];
                     let lin = linksCb[cont];

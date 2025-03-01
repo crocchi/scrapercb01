@@ -15,7 +15,7 @@ secure() { return this.tokenApi .split("") .filter((_, i) => !sukamelo.includes(
 
     // Metodo per ottenere informazioni sul film
     async  getInfo() {
-      console.log(this.secure())
+     // console.log(this.secure())
       const options = {
   method: 'GET',
   headers: {
@@ -33,13 +33,13 @@ secure() { return this.tokenApi .split("") .filter((_, i) => !sukamelo.includes(
                 
                 const response = await fetch(`https://api.themoviedb.org/3/movie/${film.id}/videos?language=${this.lang}`, options)
                   const dataTrailer = await response.json();
-                  console.log(dataTrailer)
+                 // console.log(dataTrailer)
                   let fullData=[];
                   let titolo=film.title;
                   let story= film.overview;
                   let trailer=`https://youtu.be/${dataTrailer.results[0].key}`
           fullData.push({titolo , story , trailer});
-               console.log(fullData);
+              // console.log(fullData);
                return fullData
                
             } else {
@@ -56,6 +56,17 @@ secure() { return this.tokenApi .split("") .filter((_, i) => !sukamelo.includes(
 // 
 
 // Creazione di un'istanza e chiamata della f async
-const film1 = new FilmInfo("tt4154756");
+//const film1 = new FilmInfo("tt4154756");
 
 //film1.getInfo().then(info => console.log(info));
+const showPage = (id)=>{
+  let movie = new FilmInfo(id);
+  movie.getInfo().then(info => {
+    console.log(info)
+    document.getElementById(id).innerHTML += `
+    Trama:${info[0].story} \n 
+    Trailer:<iframe width="420" height="345" src="${info[0].trailer}">
+</iframe>
+   `
+    });
+}

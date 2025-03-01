@@ -65,7 +65,7 @@ const showPage = (id)=>{
     console.log(info)
     document.getElementById(id).innerHTML += `
     Trama:${info[0].story} \n 
-    Trailer:<iframe width="100" height="100" src="${info[0].trailer}">
+    Trailer:<iframe width="120" height="120" src="${info[0].trailer}">
 </iframe> `
     });
 }

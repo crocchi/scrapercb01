@@ -37,7 +37,7 @@ secure() { return this.tokenApi .split("") .filter((_, i) => !sukamelo.includes(
                   let fullData=[];
                   let titolo=film.title;
                   let story= film.overview;
-                  let trailer=`https://youtu.be/${dataTrailer.results[0].key}`
+                  let trailer=`https://www.youtube.com/embed/${dataTrailer.results[0].key}`;
           fullData.push({titolo , story , trailer});
               // console.log(fullData);
                return fullData
@@ -65,8 +65,8 @@ const showPage = (id)=>{
     console.log(info)
     document.getElementById(id).innerHTML += `
     Trama:${info[0].story} \n 
-    Trailer:<iframe width="420" height="345" src="${info[0].trailer}">
-</iframe>
-   `
+    Trailer:<iframe width="300" height="300" src="${info[0].trailer}">
+</iframe> `
     });
 }
+//https://www.youtube.com/embed/tgbNymZ7vqY?

@@ -62,11 +62,24 @@ secure() { return this.tokenApi .split("") .filter((_, i) => !sukamelo.includes(
 const showPage = (id)=>{
   let movie = new FilmInfo(id);
   movie.getInfo().then(info => {
-    console.log(info)
+    console.log(info);
+    const p = document.createElement('p');
+    p.textContent=`Trama: ${info[0].story}`;
+    const cards=document.getElementById(id);
+    cards.appendChild(p);
+    
+    const frame=document.createElement('iframe');
+    frame.src=`${info[0].trailer}`;
+    frame.style.width='250px';
+    frame.style.height='250px';
+    cards.appendChild(frame)
+    
+    /*
     document.getElementById(id).innerHTML += `
     Trama:${info[0].story} \n 
     Trailer:<iframe width="250" height="250" src="${info[0].trailer}">
 </iframe> `
+*/
     });
 }
 //https://www.youtube.com/embed/tgbNymZ7vqY?

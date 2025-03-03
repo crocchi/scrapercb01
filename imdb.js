@@ -70,8 +70,8 @@ const showPage = (id)=>{
     
     const frame=document.createElement('iframe');
     frame.src=`${info[0].trailer}`;
-    frame.style.width='250px';
-    frame.style.height='250px';
+    frame.style.width='350px';
+    frame.style.height='350px';
     cards.appendChild(frame)
     
     /*

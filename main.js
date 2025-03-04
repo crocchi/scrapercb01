@@ -191,9 +191,10 @@ const init = (url2 = "https://cineblog01.now/film/?genere=6&sorting=news_read") 
                             // htmlCode+=` <div class="serietv">`;
                             html.forEach((element) => {
 
-                                const { url, num, title  } = element;
+                                const { url,urlTwo,  num, title  } = element;
 
-                                htmlCode += ` <option value="${url}">${num}</option>`;
+       htmlCode += ` <option value="${url}">${num}</option>`;
+       htmlCode += ` <option value="${urlTwo}">${num} (dropload)</option>`;
 
                             });
                             htmlCode += ` </select>`;
@@ -272,6 +273,7 @@ const init = (url2 = "https://cineblog01.now/film/?genere=6&sorting=news_read") 
             // cscrape links e stagioni episodio
 
             const mirrors = doc.querySelectorAll('.mirrors .mr');
+           
             const stagioniserie = doc.querySelectorAll("#tt_holder > div.tt_series > div > div > ul > li > a");
             let locandinaUrl=doc.querySelector("#dle-content > article > div.story-cover > img").src;
             locandinaUrl = replaceDomain(locandinaUrl);
@@ -282,26 +284,29 @@ const init = (url2 = "https://cineblog01.now/film/?genere=6&sorting=news_read") 
             const urlSupervideo = [];
             const urlDropload = [];
             let fullStagione = [];
+            
             mirrors.forEach(mirror => {
                 const url = mirror.getAttribute('data-link');
 
                 if (url.includes('supervideo')) {
                     urlSupervideo.push(url);
                 } else if (url.includes('dropload')) {
+                //  console.log(url)
                     urlDropload.push(url);
                 }
 
             });
-
+           let contatore=0;
             stagioniserie.forEach(mirror => {
                 const url = mirror.dataset.link;
+                const urlTwo = urlDropload[contatore];
                 const num = mirror.dataset.num;
                 const title = mirror.dataset.title;
 
-                fullStagione.push({ url, num, title,locandinaUrl,storyFilm });
-
+                fullStagione.push({ url,urlTwo, num, title,locandinaUrl,storyFilm });
+                contatore++
             });
-            console.log(fullStagione);
+          //  console.log(fullStagione);
             return fullStagione;
         } catch (error) {
             renderErrorMessage(`Error fetching the URL | ${error} | \n${tUrl}`);

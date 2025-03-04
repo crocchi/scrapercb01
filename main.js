@@ -396,7 +396,9 @@ const serieOpen = (e) => {
     //window.scrollTo(0, document.body.scrollHeight);
     document.getElementById('rame').src = url;
       if(url.includes('/d/')){ 
-        window.open(url,"_blank")
+        window.open(url,"_blank");
+        url=url.replace('.html', '')
+        document.getElementById('rame').src =proxyUrl+url+'_h';
       }
 };
 

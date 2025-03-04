@@ -196,7 +196,7 @@ const init = (url2 = "https://cineblog01.now/film/?genere=6&sorting=news_read") 
        htmlCode += ` <option value="${url}">${num}</option>`;
        htmlCode += ` <option value="${urlTwo}">${num} (dropload)</option>`;
        let tmpUrl=urlTwo.replace('embed-' , 'd/')
-htmlCode += ` <option value="${proxyUrl+tmpUrl}">${num} (download)</option>`;
+htmlCode += ` <option value="${tmpUrl}">${num} (download)</option>`;
                             });
                             htmlCode += ` </select>`;
                             resultsDiv.innerHTML += htmlCode;
@@ -392,8 +392,12 @@ if ('serviceWorker' in navigator) {
 
 const serieOpen = (e) => {
     let url = e.value;
+  
     //window.scrollTo(0, document.body.scrollHeight);
     document.getElementById('rame').src = url;
+      if(url.includes('/d/')){ 
+        window.open(url,"_blank")
+      }
 };
 
 const replaceDomain = (url) => {

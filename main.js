@@ -195,7 +195,8 @@ const init = (url2 = "https://cineblog01.now/film/?genere=6&sorting=news_read") 
 
        htmlCode += ` <option value="${url}">${num}</option>`;
        htmlCode += ` <option value="${urlTwo}">${num} (dropload)</option>`;
-
+       let tmpUrl=urlTwo.replace('embed-' , 'd/')
+htmlCode += ` <option value="${tmpUrl}">${num} (dowmload)</option>`;
                             });
                             htmlCode += ` </select>`;
                             resultsDiv.innerHTML += htmlCode;

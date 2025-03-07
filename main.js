@@ -181,7 +181,7 @@ const init = (url2 = "https://cineblog01.now/film/?genere=6&sorting=news_read") 
                         .then(html => {
                             console.log(html)
                             if (html.length == 0) { return }//se sn film nn farli visualizzare(se ha solo 2 link)
-                            htmlCode += ` <p class="series-card">`;
+                            htmlCode += ` <p class="card">`;
                             htmlCode += ` <label for="ser-select">${article.title}</label>`;
                             htmlCode += ` <img class="series-card-img" src="${html[0].locandinaUrl}" alt="locandina">`;
                             htmlCode += ` <span>${html[0].storyFilm}</span>`;

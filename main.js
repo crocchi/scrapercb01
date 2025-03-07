@@ -7,6 +7,7 @@ const urlHost = "https://cineblog01.now/";
 const checkProxyStatus = async () => {
     document.getElementById('activate-proxy-btn').innerText = 'Checking proxy status..aspè';
     document.getElementById('activate-proxy-btn').style.backgroundColor = 'red';
+    renderErrorMessage(`Sto Attivando il  proxy, aspetta un attimo...`);
     let casualNumber=Math.floor(Math.random() * 1000) + 1000;//a random number for no-cache problem
     fetch('https://solana-token-info.onrender.com/https://cineblog01.now/?'+casualNumber)
         .then(response => {
@@ -18,6 +19,7 @@ const checkProxyStatus = async () => {
         }).finally(() => {
             document.getElementById('activate-proxy-btn').innerText = 'Activated Proxy';
             document.getElementById('activate-proxy-btn').style.backgroundColor = 'green';
+            renderErrorMessage(`Proxy Attivato.`);
         }).catch(error => {
             renderErrorMessage(error);
             document.getElementById('activate-proxy-btn').innerText = 'aspett nu minut!';
@@ -187,7 +189,7 @@ const init = (url2 = "https://cineblog01.now/film/?genere=6&sorting=news_read") 
                             htmlCode += ` <span>${html[0].storyFilm}</span>`;
                             htmlCode += ` <select onchange='serieOpen(this)'name="genere" id="ser-select">`;
                             htmlCode += ` <option value="none">- Stagione 1 -</option>`;
-                            htmlCode += ` </p>`
+                            htmlCode += ` </p>`;
                             // htmlCode+=` <div class="serietv">`;
                             html.forEach((element) => {
 
@@ -203,6 +205,7 @@ htmlCode += ` <option value="${tmpUrl}">${num} (download)</option>`;
                             htmlCode = '';
                         }).catch(error => {
                             renderErrorMessage(`Error SukaSerie! Fetch | ${error}`);
+                            htmlCode = '';
                         });
 
                 } else {
@@ -384,6 +387,7 @@ if ('serviceWorker' in navigator) {
         navigator.serviceWorker.register('/service-worker.js')
             .then(registration => {
                 console.log('ServiceWorker registration successful with scope: ', registration.scope);
+                document.getElementById('activate-proxy-btn').display = 'none';
             }, err => {
                 console.log('ServiceWorker registration failed: ', err);
             });
@@ -410,3 +414,32 @@ const replaceDomain = (url) => {
     }
     return url.replace(oldDomain, urlHost);
 };
+
+/*
+let urlHostSc = "https://streamingcommunity.lu/";
+
+//ricerca serie
+   https://streamingcommunity.lu/archivio?search=bad&type=tv
+
+//ricerca link pagina ricerca - serie tv
+let linkSc=document.querySelectorAll(".slider-item > a");
+let linksSc=[];
+
+linkSc.forEach((element)=>{
+    linksSc.push(element.href)
+})
+    //vai sulla singola pagina delle serie tv e.....
+    //ricerca link pagina serie tv - singole puntate
+let linkScSerie=document.querySelectorAll(".info-wrap .slider-item > a");
+let linksScSerieLink=[];
+
+linkScSerie.forEach((element)=>{
+    linksScSerieLink.push(element.href);
+    console.log(element.href);
+})
+
+
+//https://streamingcommunity.lu/titles/3045-capitani/stagione-1 stagione-2 etc..
+//https://streamingcommunity.lu/watch/3045?e=21053
+
+*/

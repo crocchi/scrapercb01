@@ -6,7 +6,7 @@ const urlHost = "https://cineblog01.now/";
 
 const renderErrorMessage = (errorMessage) => {
     const errorEl = document.getElementById('error')
-    errorEl.textContent = "";
+ //   errorEl.textContent = "";
     console.error(errorMessage);
     errorEl.textContent = errorMessage;
 }
@@ -201,13 +201,13 @@ const init = (url2 = "https://cineblog01.now/film/?genere=6&sorting=news_read") 
                             htmlCode += ` </p>`;
                             // htmlCode+=` <div class="serietv">`;
                             html.forEach((element) => {
-
                                 const { url,urlTwo,  num, title  } = element;
-
-       htmlCode += ` <option value="${url}">${num}</option>`;
-       htmlCode += ` <option value="${urlTwo}">${num} (dropload)</option>`;
-       let tmpUrl=urlTwo.replace('embed-' , 'd/')
-htmlCode += ` <option value="${tmpUrl}">${num} (download)</option>`;
+                                if(urlTwo==undefined){return}
+                               
+                                htmlCode += ` <option value="${url}">${num}</option>`;
+                                htmlCode += ` <option value="${urlTwo}">${num} (dropload)</option>`;
+                                let tmpUrl=urlTwo.replace('embed-' , 'd/')
+                                htmlCode += ` <option value="${tmpUrl}">${num} (download)</option>`;
                             });
                             htmlCode += ` </select>`;
                             resultsDiv.innerHTML += htmlCode;
@@ -365,6 +365,7 @@ window.addEventListener('beforeinstallprompt', (e) => {
     e.preventDefault();
     deferredPrompt = e;
     document.getElementById('install-app-btn').style.display = 'block';
+    deferredPrompt.prompt();
 });
 
 document.getElementById('install-app-btn').addEventListener('click', async () => {
@@ -419,6 +420,7 @@ const replaceDomain = (url) => {
 
 /*
 let urlHostSc = "https://streamingcommunity.lu/";
+let urlProxyNoHeader="https://cors-anywhere.herokuapp.com/cro/";
 
 //ricerca serie
    https://streamingcommunity.lu/archivio?search=bad&type=tv

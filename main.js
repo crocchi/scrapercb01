@@ -420,7 +420,7 @@ const replaceDomain = (url) => {
 
 /*
 let urlHostSc = "https://streamingcommunity.lu/";
-let urlProxyNoHeader="https://cors-anywhere.herokuapp.com/cro/";
+let urlProxyNoHeader="https://solana-token-info.onrender.com/cro/";
 
 //ricerca serie
    https://streamingcommunity.lu/archivio?search=bad&type=tv

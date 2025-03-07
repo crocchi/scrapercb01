@@ -96,6 +96,7 @@ document.getElementById('type-select').addEventListener('change', function () {
 
 });
 
+/*
 document.getElementById('download-html-btn').addEventListener('click', () => {
     const htmlContent = document.documentElement.outerHTML;
     const blob = new Blob([htmlContent], { type: 'text/html' });
@@ -108,6 +109,7 @@ document.getElementById('download-html-btn').addEventListener('click', () => {
     document.body.removeChild(a);
     URL.revokeObjectURL(url);
 });
+*/
 
 document.getElementById('sorting-select').addEventListener('change', function () {
     selectedSorting = this.value;

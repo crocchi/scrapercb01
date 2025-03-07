@@ -4,6 +4,13 @@ let proxyUrl = 'https://solana-token-info.onrender.com/'//'https://api.allorigin
 let currentProxy = 1;
 const urlHost = "https://cineblog01.now/";
 
+const renderErrorMessage = (errorMessage) => {
+    const errorEl = document.getElementById('error')
+    errorEl.textContent = "";
+    console.error(errorMessage);
+    errorEl.textContent = errorMessage;
+}
+
 const checkProxyStatus = async () => {
     document.getElementById('activate-proxy-btn').innerText = 'Checking proxy status..aspè';
     document.getElementById('activate-proxy-btn').style.backgroundColor = 'red';
@@ -351,13 +358,6 @@ htmlCode += ` <option value="${tmpUrl}">${num} (download)</option>`;
 
 } // FINE INIT
 //document.querySelector("#download-table > tbody > tr ")
-
-const renderErrorMessage = (errorMessage) => {
-    const errorEl = document.getElementById('error')
-    errorEl.textContent = "";
-    console.error(errorMessage);
-    errorEl.textContent = errorMessage;
-}
 
 let deferredPrompt;
 

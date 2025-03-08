@@ -15,13 +15,38 @@
     <h1>Cb01 WebScraper/NoAds by_c&c v0.2.1</h1>
   </header>
   <nav id="main-nav">
-    <div class="btn-group">
-      <button class="btn" id="activate-proxy-btn">Activate Proxy</button>
-     <!-- <button class="btn bg-secondary" id="download-html-btn">Download LocalPage</button>-->
-      <button class="btn bg-secondary" id="install-app-btn">Install App</button>
+
+
+    <div class="search-box">
+      <input class="" type="text" id="search-input" name="search" placeholder="Cerca Film o Serie Tv...">
+      <button class="btn bg-primary" id="search-select">Cerca</button>
     </div>
+
+
+
     <div>
       <div>
+
+        <!--
+        <fieldset>
+
+          <div>
+            <input type="checkbox" id="coding" name="interest" value="coding" />
+            <label for="coding">Film</label>
+          </div>
+          <div>
+            <input type="checkbox" id="music" name="interest" value="music" />
+            <label for="music">Serie Tv</label>
+          </div>
+        </fieldset>
+        -->
+
+        <label for="type-select">Scegli:</label>
+        <select name="type" id="type-select">
+          <option value="film">Film</option>
+          <option value="serie-tv">Serie-Tv</option>
+        </select>
+
         <label for="genere-select">Genere:</label>
         <select name="genere" id="genere-select">
           <option value="">-scegli-</option>
@@ -50,6 +75,7 @@
           <option value="20">Western</option>
         </select>
       </div>
+
       <div>
         <label for="sorting-select">Ordina per:</label>
         <select name="sorting" id="sorting-select">
@@ -64,6 +90,7 @@
           <option value="soon">Film più attesi</option>
         </select>
       </div>
+
       <div>
         <label for="page-select">Pagina:</label>
         <select name="page" id="page-select">
@@ -79,16 +106,17 @@
           <option value="10">10</option>
         </select>
 
-        <select name="type" id="type-select">
-          <option value="film">Film</option>
-          <option value="serie-tv">Serie-Tv</option>
-        </select>
+       
 
       </div>
-      <div class="search-box">
-        <input class="" type="text" id="search-input" name="search" placeholder="Cerca Film...">
-        <button class="btn bg-primary" id="search-select">Cerca</button>
+ 
+      <div class="btn-group">
+        <button class="btn" id="activate-proxy-btn">Activate Proxy</button>
+       <!-- <button class="btn bg-secondary" id="download-html-btn">Download LocalPage</button>-->
+        <button class="btn bg-secondary" id="install-app-btn">Install App</button>
       </div>
+
+
     </div>
 
 

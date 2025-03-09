@@ -79,6 +79,7 @@ nav .search-box > input {
     border-top-right-radius: 0px;
     border-end-end-radius: 0px;
     outline: none;
+    font-size: larger;
 }
 label {
     display: block;

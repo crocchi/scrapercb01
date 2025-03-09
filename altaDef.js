@@ -86,9 +86,13 @@ class Guardaserie {
 
         const selectElement = document.createElement('select');
        selectElement.className = 'guardaserie';
-    selectElement.onchange = function() {
-        document.getElementById('rame').src = this.value;
+
+    selectElement.onchange = async function() {
+        preload('serie tv..')
+        await scraper.fetchEpisodesLink(this.value);
+        document.getElementById('rame').src = scraper.linkEp;
     };
+
      this.episodes.forEach(ep => {
             const optionElement = document.createElement('option');
             optionElement.value = ep.link;
@@ -106,9 +110,9 @@ const serieOpenTwo = (e) => {
     let url = e.value;
     document.getElementById('rame').src = url;
 }
-
+let scraper;
 const searchGuardaSerie= async (text)=>{
-    const scraper = new Guardaserie();
+    scraper = new Guardaserie();
     await scraper.searchSeries(text);
     await scraper.fetchEpisodes(scraper.seriesTvLinks[0]);
     scraper.fetchEpisodesLink(scraper.episodes[0].link)

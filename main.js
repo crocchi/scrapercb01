@@ -86,10 +86,11 @@ document.getElementById('search-select').addEventListener('click', function () {
     //----------- selectedGenere = this.value;
     //search-input
     let valueTemp = document.getElementById("search-input").value;
-    let url = `https://cineblog01.now/${type}/?story=${valueTemp}&do=search&subaction=search`
+    let url = `${urlHost}${type}/?story=${valueTemp}&do=search&subaction=search`
     //let url = craftUrl()
     init(url)
     document.getElementById('results').innerHTML = "";
+    searchGuardaSerie(valueTemp);
 });
 
 //type-select
@@ -123,8 +124,8 @@ document.getElementById('download-html-btn').addEventListener('click', () => {
 
 document.getElementById('sorting-select').addEventListener('change', function () {
     selectedSorting = this.value;
-    let url = craftUrl()
-    init(url)
+    let url = craftUrl();
+    init(url);
     document.getElementById('results').innerHTML = "";
 });
 document.getElementById('activate-proxy-btn').addEventListener('click', () => {
@@ -145,7 +146,7 @@ const init = (url2 = "https://cineblog01.now/film/?genere=6&sorting=news_read") 
     const targetUrl = url2; //'https://cineblog01.now'; // Replace with the URL you want to scrape
 
     console.log(proxyUrl + targetUrl);
-    preload('CaRiCo...');
+    preload('CaRiCo . . .');
     fetch(proxyUrl + targetUrl/*,{ headers: {
       'Origin': 'https://scrapercb01.onrender.com',
       'x-requested-with': 'XMLHttpRequest'
@@ -419,57 +420,6 @@ const replaceDomain = (url) => {
     }
     return url.replace(oldDomain, urlHost);
 };
-
-/*
-
-const suko = async (url)=>{
-        const response = await fetch(proxyUrl + url);
-        const htmlContent = await response.text();
-        const parser = new DOMParser();
-        const doc = parser.parseFromString(htmlContent, 'text/html');
-        return doc
-}
-
-// https://altadefinizionegratis.me/?story=i+simpson&do=search&subaction=search&titleonly=3
-
-const hostAltadef='https://altadefinizionegratis.me';
-let urlAltadef;
-
-const craftUrlAltadef = (search) => {
-     return `${hostAltadef}/?story=${search}&do=search&subaction=search&titleonly=3`;   
-}
-
-// nella pagina della ricerca vede se nel link c'è la serie tv altrimenti prende anke i films
-var seriesTvLinks = [];
-document.querySelectorAll("#dle-content .wrapperImage > a ").forEach(function(link) {
-        if (link.href.includes('serie-tv')) {
-            seriesTvLinks.push(link.href);
-        }
-    });
-
-// nella pagina della serie prende i vari link delle serie e li categorizza
-    const episodes = [];
-    document.querySelectorAll('.tab-pane').forEach(season => {
-        season.querySelectorAll('li').forEach(episode => {
-            const link = episode.querySelector('a');
-            const mirrors = Array.from(episode.querySelectorAll('.mirrors a')).map(mirror => ({
-                link: mirror.getAttribute('data-link'),
-                source: mirror.textContent.trim()
-            }));
-            episodes.push({
-                num: link.getAttribute('data-num'),
-                title: link.getAttribute('data-title'),
-                mirrors: mirrors
-            });
-        });
-    });
-    console.log(episodes);
-
-*/
-
-
-
-
 
 
 /*

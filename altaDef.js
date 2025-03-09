@@ -91,6 +91,7 @@ class Guardaserie {
         preload('serie tv..')
         await scraper.fetchEpisodesLink(this.value);
         document.getElementById('rame').src = scraper.linkEp;
+        preload();
     };
 
      this.episodes.forEach(ep => {

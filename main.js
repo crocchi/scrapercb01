@@ -81,6 +81,12 @@ document.getElementById('genere-select').addEventListener('change', function () 
     init(url)
     document.getElementById('results').innerHTML = "";
 });
+//toggle-element-checkbox
+
+let opzioneGuardaserie=false;
+document.getElementById('toggle-element-checkbox').addEventListener('change', function () {
+        opzioneGuardaserie=this.checked;
+});
 
 document.getElementById('search-select').addEventListener('click', function () {
     //----------- selectedGenere = this.value;
@@ -90,7 +96,10 @@ document.getElementById('search-select').addEventListener('click', function () {
     //let url = craftUrl()
     init(url)
     document.getElementById('results').innerHTML = "";
-    searchGuardaSerie(valueTemp);
+    if(opzioneGuardaserie){
+        searchGuardaSerie(valueTemp);
+    }
+
 });
 
 //type-select

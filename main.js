@@ -14,6 +14,7 @@ const renderErrorMessage = (errorMessage) => {
 const checkProxyStatus = async () => {
     document.getElementById('activate-proxy-btn').innerText = 'Checking proxy status..aspè';
     document.getElementById('activate-proxy-btn').style.backgroundColor = 'red';
+    preload()
     renderErrorMessage(`Sto Attivando il  proxy, aspetta un attimo...`);
     let casualNumber=Math.floor(Math.random() * 1000) + 1000;//a random number for no-cache problem
     fetch('https://solana-token-info.onrender.com/https://cineblog01.now/?'+casualNumber)
@@ -27,11 +28,13 @@ const checkProxyStatus = async () => {
             document.getElementById('activate-proxy-btn').innerText = 'Activated Proxy';
             document.getElementById('activate-proxy-btn').style.backgroundColor = 'green';
             renderErrorMessage(`Proxy Attivato.`);
+            preload()
         }).catch(error => {
             renderErrorMessage(error);
             document.getElementById('activate-proxy-btn').innerText = 'aspett nu minut!';
             document.getElementById('activate-proxy-btn').style.backgroundColor = 'yellow';
             document.getElementById('activate-proxy-btn').style.color = 'black';
+            preload()
         });
 
 };
@@ -139,11 +142,10 @@ const init = (url2 = "https://cineblog01.now/film/?genere=6&sorting=news_read") 
     //let proxyUrlBack="https://api.allorigins.win/raw?url="
     //https://proxy.cors.sh/https://google.it
 
-
     const targetUrl = url2; //'https://cineblog01.now'; // Replace with the URL you want to scrape
 
     console.log(proxyUrl + targetUrl);
-
+    preload('CaRiCo...');
     fetch(proxyUrl + targetUrl/*,{ headers: {
       'Origin': 'https://scrapercb01.onrender.com',
       'x-requested-with': 'XMLHttpRequest'
@@ -272,7 +274,7 @@ const init = (url2 = "https://cineblog01.now/film/?genere=6&sorting=news_read") 
 
             })
 
-
+            preload();
         })// fine then
 
     const sukaSerie = async (tUrl) => {
@@ -417,6 +419,58 @@ const replaceDomain = (url) => {
     }
     return url.replace(oldDomain, urlHost);
 };
+
+/*
+
+const suko = async (url)=>{
+        const response = await fetch(proxyUrl + url);
+        const htmlContent = await response.text();
+        const parser = new DOMParser();
+        const doc = parser.parseFromString(htmlContent, 'text/html');
+        return doc
+}
+
+// https://altadefinizionegratis.me/?story=i+simpson&do=search&subaction=search&titleonly=3
+
+const hostAltadef='https://altadefinizionegratis.me';
+let urlAltadef;
+
+const craftUrlAltadef = (search) => {
+     return `${hostAltadef}/?story=${search}&do=search&subaction=search&titleonly=3`;   
+}
+
+// nella pagina della ricerca vede se nel link c'è la serie tv altrimenti prende anke i films
+var seriesTvLinks = [];
+document.querySelectorAll("#dle-content .wrapperImage > a ").forEach(function(link) {
+        if (link.href.includes('serie-tv')) {
+            seriesTvLinks.push(link.href);
+        }
+    });
+
+// nella pagina della serie prende i vari link delle serie e li categorizza
+    const episodes = [];
+    document.querySelectorAll('.tab-pane').forEach(season => {
+        season.querySelectorAll('li').forEach(episode => {
+            const link = episode.querySelector('a');
+            const mirrors = Array.from(episode.querySelectorAll('.mirrors a')).map(mirror => ({
+                link: mirror.getAttribute('data-link'),
+                source: mirror.textContent.trim()
+            }));
+            episodes.push({
+                num: link.getAttribute('data-num'),
+                title: link.getAttribute('data-title'),
+                mirrors: mirrors
+            });
+        });
+    });
+    console.log(episodes);
+
+*/
+
+
+
+
+
 
 /*
 let urlHostSc = "https://streamingcommunity.lu/";

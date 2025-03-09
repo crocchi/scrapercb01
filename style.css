@@ -100,9 +100,14 @@ main {
 
 
 #error {
-    color: var(--error);
     text-align: center;
+    position: absolute;
+    top: 48%;
+    left: 48%;
     padding: .6rem;
+    transform: translate(-50%, -100%);
+    color: #00000080;
+    font-weight: 700;
 }
 
 .btn-group {
@@ -183,4 +188,45 @@ iframe {
 
 .card a:hover {
     text-decoration: underline;
+}
+
+#preload {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    display: none;
+}
+
+
+#preload {
+    position: fixed;
+  
+    /* left: 100%; */
+    width: 100%;
+    height: 100%;
+  
+    background: white;
+
+    /* justify-content: center; */
+    align-items: center;
+    z-index: 9999;
+    opacity: 0.9;
+    display: none;
+}
+
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+svg {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -100%);
 }

@@ -21,7 +21,7 @@ class Guardaserie {
 
     craftUrl(search) { //https://guardoserie.quest/?s=i+simpson
         this.searchString=search;
-        return `${this.host}/?s=${search}`;
+        return `${this.host}?s=${search}`;
       //  return `${this.host}/?story=${search}&do=search&subaction=search&titleonly=3`;
     }
 
@@ -88,7 +88,7 @@ class Guardaserie {
        selectElement.className = 'guardaserie';
 
     selectElement.onchange = async function() {
-        preload('serie tv..')
+        preload('serie tv - update link...')
         await scraper.fetchEpisodesLink(this.value);
         document.getElementById('rame').src = scraper.linkEp;
         preload();

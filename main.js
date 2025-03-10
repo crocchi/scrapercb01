@@ -88,11 +88,21 @@ document.getElementById('toggle-element-checkbox').addEventListener('change', fu
         opzioneGuardaserie=this.checked;
 });
 
+let search_string_page='';
+let contSearch=0;
+const loadNextPage=()=>{
+    contSearch++;
+    let sww=`${search_string_page}${contSearch}`;
+    init(sww);
+    document.getElementById('results').innerHTML = "";
+}
 document.getElementById('search-select').addEventListener('click', function () {
     //----------- selectedGenere = this.value;
     //search-input
     let valueTemp = document.getElementById("search-input").value;
-    let url = `${urlHost}${type}/?story=${valueTemp}&do=search&subaction=search`
+    let url = `${urlHost}${type}/?story=${valueTemp}&do=search&subaction=search`;// &search_start=2
+    search_string_page=`${urlHost}${type}/?story=${valueTemp}&do=search&subaction=search&search_start=`;// &search_start=2
+    contSearch=1;
     //let url = craftUrl()
     init(url)
     document.getElementById('results').innerHTML = "";
@@ -222,6 +232,7 @@ const init = (url2 = "https://cineblog01.now/film/?genere=6&sorting=news_read") 
                                 htmlCode += ` <option value="${tmpUrl}">${num} (download)</option>`;
                             });
                             htmlCode += ` </select>`;
+                        
                             resultsDiv.innerHTML += htmlCode;
                             htmlCode = '';
                         }).catch(error => {
@@ -277,13 +288,23 @@ const init = (url2 = "https://cineblog01.now/film/?genere=6&sorting=news_read") 
                         window.scrollTo(0, document.body.scrollHeight);
                     }); a.target = '_blank';
                     p.appendChild(a);
+                   
                     resultsDiv.appendChild(p);
                     cont++
                 }
 
 
-            })
-
+            })//fine ciclo for async 
+ //aggiunge button next page  DA FIXARE 
+ /*
+ document.getElementById('next').innerHTML='';
+ if(contSearch>0){
+ const nextPageButton = document.createElement('button');
+ nextPageButton.textContent = `${contSearch+1}`;//'Next Page';//contSearch
+ nextPageButton.onclick = loadNextPage;
+ document.getElementById('next').appendChild(nextPageButton);
+ }
+ */
             preload();
         })// fine then
 

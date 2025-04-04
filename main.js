@@ -50,7 +50,7 @@ let page = 0;
 let type = 0;//film - serie-tv
 
 const craftUrl = () => {
-    url = `https://cineblog01.now/`;
+    url = urlHost;
     if (type) {
         url += `${type}/`;
     } else { url += "film/" }
@@ -87,6 +87,7 @@ let opzioneGuardaserie=false;
 document.getElementById('toggle-element-checkbox').addEventListener('change', function () {
         opzioneGuardaserie=this.checked;
 });
+
 
 let search_string_page='';
 let contSearch=0;
@@ -281,14 +282,20 @@ const init = (url2 = "https://cineblog01.now/film/?genere=6&sorting=news_read") 
                     p.id=imdbstring;
                     a.textContent = article.title;
                     a.href = linksCb[cont];
+                    a.target="framo"; 
                     let lin = linksCb[cont];
                     a.addEventListener('click', (event) => {
                         event.preventDefault();
                         document.getElementById('rame').src = lin;
                         window.scrollTo(0, document.body.scrollHeight);
-                    }); a.target = '_blank';
+                    }); 
                     p.appendChild(a);
-                   
+               
+                    // Save the element's HTML to localStorage
+                    localStorage.setItem(article.title, JSON.stringify(p.outerHTML));
+                    //localStorage.getItem('savedItems')
+
+
                     resultsDiv.appendChild(p);
                     cont++
                 }
@@ -481,3 +488,23 @@ linkScSerie.forEach((element)=>{
 //https://streamingcommunity.lu/watch/3045?e=21053
 
 */
+
+
+document.getElementById('filmDblocal').addEventListener('change', function () {
+    
+    if (this.checked) {
+        const resultsDiv = document.getElementById('results');
+        resultsDiv.innerHTML = ""; // Clear existing content
+        for (let i = 0; i < localStorage.length; i++) {
+            const key = localStorage.key(i);
+            const savedHtml = JSON.parse(localStorage.getItem(key));
+            if (savedHtml) {
+                resultsDiv.innerHTML += savedHtml;
+            }
+        }
+       
+    } else {
+        console.log(this.checked);
+       
+    }
+});

@@ -9,6 +9,7 @@ class Guardaserie {
         this.titolo ='';
         this.locandina ='';
         this.linkEp='';
+        this.doc='';
         //this.type = 'serie' //
     }
 
@@ -16,6 +17,7 @@ class Guardaserie {
         const response = await fetch(url);
         const htmlContent = await response.text();
         const parser = new DOMParser();
+        this.doc = parser.parseFromString(htmlContent, 'text/html');
         return parser.parseFromString(htmlContent, 'text/html');
     }
 

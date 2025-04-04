@@ -18,3 +18,10 @@ const preload = (msg) => {
         preloadElement.style.display = 'block';
     }
 }
+
+
+document.getElementById('rame').addEventListener('load', function() {
+    // Your operations here. For example:
+    console.log('Iframe content loaded or changed!');
+    window.scrollTo(0, document.body.scrollHeight);
+});

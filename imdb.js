@@ -37,7 +37,13 @@ secure() { return this.tokenApi .split("") .filter((_, i) => !sukamelo.includes(
                   let fullData=[];
                   let titolo=film.title;
                   let story= film.overview;
-                  let trailer=`https://www.youtube.com/embed/${dataTrailer.results[0].key}`;
+                  let trailer='';
+                  if(!dataTrailer.results[0].video){
+
+                  }else{
+
+                  }
+                  trailer=`https://www.youtube.com/embed/${dataTrailer.results[0].key}`;
           fullData.push({titolo , story , trailer});
               // console.log(fullData);
                return fullData
@@ -72,6 +78,7 @@ const showPage = (id)=>{
     frame.src=`${info[0].trailer}`;
     frame.style.width='350px';
     frame.style.height='350px';
+    frame.setAttribute('allowfullscreen', '');
     cards.appendChild(frame)
     
     /*

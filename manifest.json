@@ -1,6 +1,6 @@
 {
-  "name": "Cb01 WebScraper",
-  "short_name": "WebScraper",
+  "name": "CroFLIX",
+  "short_name": "CroFLIX",
   "start_url": ".",
   "display": "standalone",
   "background_color": "#ffffff",

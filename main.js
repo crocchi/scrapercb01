@@ -101,6 +101,28 @@ document.getElementById('search-select').addEventListener('click', function () {
     //----------- selectedGenere = this.value;
     //search-input
     let valueTemp = document.getElementById("search-input").value;
+
+    //search valueTemp in localstorage 
+ 
+    let found = false;
+    for (let i = 0; i < localStorage.length; i++) {
+        const key = localStorage.key(i);
+        if (key.toLowerCase().includes(valueTemp.toLowerCase())) {
+            found = true;
+            const savedHtml = JSON.parse(localStorage.getItem(key));
+            if (savedHtml) {
+            document.getElementById('results').innerHTML += savedHtml;
+            }
+            renderErrorMessage(`results found in localStorage for: ${valueTemp}`);
+            return;
+        }
+    }
+    if (found && searchLoc ) {
+        ///console.log(`No results found in localStorage for: ${valueTemp}`);
+        //se trovo in localstorage esce e nn cerca online...
+        return
+    }
+
     let url = `${urlHost}${type}/?story=${valueTemp}&do=search&subaction=search`;// &search_start=2
     search_string_page=`${urlHost}${type}/?story=${valueTemp}&do=search&subaction=search&search_start=`;// &search_start=2
     contSearch=1;
@@ -235,6 +257,8 @@ const init = (url2 = "https://cineblog01.now/film/?genere=6&sorting=news_read") 
                             htmlCode += ` </select>`;
                         
                             resultsDiv.innerHTML += htmlCode;
+                             // Save the element's HTML to localStorage
+                            localStorage.setItem(article.title, JSON.stringify(htmlCode));
                             htmlCode = '';
                         }).catch(error => {
                             renderErrorMessage(`Error SukaSerie! Fetch | ${error}`);
@@ -488,7 +512,14 @@ linkScSerie.forEach((element)=>{
 //https://streamingcommunity.lu/watch/3045?e=21053
 
 */
+let searchLoc=false;
+document.getElementById('searchDblocal').addEventListener('change', function () {
 
+    if (this.checked) {
+        searchLoc=true;
+    }
+
+}    )
 
 document.getElementById('filmDblocal').addEventListener('change', function () {
     

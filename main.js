@@ -97,6 +97,7 @@ const loadNextPage=()=>{
     init(sww);
     document.getElementById('results').innerHTML = "";
 }
+let searchLoc=false;
 document.getElementById('search-select').addEventListener('click', function () {
     //----------- selectedGenere = this.value;
     //search-input
@@ -105,6 +106,8 @@ document.getElementById('search-select').addEventListener('click', function () {
     //search valueTemp in localstorage 
  
     let found = false;
+if(searchLoc){
+    document.getElementById('results').innerHTML = "";
     for (let i = 0; i < localStorage.length; i++) {
         const key = localStorage.key(i);
         if (key.toLowerCase().includes(valueTemp.toLowerCase())) {
@@ -114,9 +117,10 @@ document.getElementById('search-select').addEventListener('click', function () {
             document.getElementById('results').innerHTML += savedHtml;
             }
             renderErrorMessage(`results found in localStorage for: ${valueTemp}`);
-            return;
         }
     }
+}
+
     if (found && searchLoc ) {
         ///console.log(`No results found in localStorage for: ${valueTemp}`);
         //se trovo in localstorage esce e nn cerca online...
@@ -512,7 +516,7 @@ linkScSerie.forEach((element)=>{
 //https://streamingcommunity.lu/watch/3045?e=21053
 
 */
-let searchLoc=false;
+
 document.getElementById('searchDblocal').addEventListener('change', function () {
 
     if (this.checked) {

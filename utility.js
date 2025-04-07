@@ -25,3 +25,10 @@ document.getElementById('rame').addEventListener('load', function() {
     console.log('Iframe content loaded or changed!');
     window.scrollTo(0, document.body.scrollHeight);
 });
+
+const countLocalStorageItems = () => {
+    const itemCount = localStorage.length;
+    document.getElementById('tooltip').innerText = `[${itemCount}]`;
+};
+
+countLocalStorageItems();
